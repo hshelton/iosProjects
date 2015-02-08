@@ -40,6 +40,8 @@ class ColorKnob : UIView
         _yCoord = touchPoint.y
         angle = touchAngle
         setNeedsDisplay()
+        
+        
     }
     
     //dirty portion of the view that gets redrawn
@@ -76,15 +78,25 @@ class ColorKnob : UIView
         inscribe.size.height = _knobRect.size.height * 0.9; inscribe.size.width = _knobRect.size.width * 0.9
         
         CGContextAddEllipseInRect(context, inscribe) //draw the elipse inside _knobRect
-        CGContextSetFillColorSpace(context, CGColorSpaceCreateDeviceRGB())
-    
+        //CGContextSetFillColorSpace(context, CGColorSpaceCreateDeviceRGB())
+        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
    
-        
-        var space: CGColorSpace = CGColorSpaceCreateDeviceRGB()
-        let grad: CGGradient = CGGradientCreateWithColorComponents(space, [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0], nil, 0)
-        CGContextDrawRadialGradient(context, grad, CGPoint(x: <#Int#>, y: <#Int#>), inscribe.width, inscribe.midY * 0.2,  inscribe.midY * 2 + 5.0,1)
         CGContextDrawPath(context, kCGPathFill)
         
+        //draw the rainbow inside of the inscribing circle
+        let arcCenter: CGPoint = CGPoint(x:inscribe.midX, y:inscribe.midY); let radius:CGFloat = CGFloat(inscribe.width); let startAngle:CGFloat = CGFloat(270)
+        let endAngle:CGFloat = CGFloat(90.0); let clockwise:Bool = true
+        let bezierPath: CGPath = UIBezierPath(arcCenter:arcCenter, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise).CGPath
+        
+        let cap : CGLineCap = CGLineCap(0); let join:CGLineJoin = CGLineJoin(1); let mLim: CGFloat = 4.0; let lWidth: CGFloat = 2.0
+        let transform: UnsafePointer<CGAffineTransform> = UnsafePointer<CGAffineTransform>()
+        //can transofrm remain nil?
+        
+        CGContextSetRGBStrokeColor(context, 3.0, 33.0, 2.0, 1.0)
+        CGContextSetFillColorWithColor(context, UIColor.greenColor().CGColor)
+        let arc:CGPath = CGPathCreateCopyByStrokingPath(bezierPath, transform, lWidth, cap, join, mLim)
+        CGContextAddPath(context, arc)
+        CGContextDrawPath(context, kCGPathFillStroke)
         
         var nibRect = CGRectZero
         nibRect.size.width = _knobRect.width * nibScale

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A2A856A1A87104900DCDB0F /* ParentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2A85691A87104900DCDB0F /* ParentView.swift */; };
 		6A81B8D71A869E700034C5F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A81B8D61A869E700034C5F4 /* AppDelegate.swift */; };
 		6A81B8DE1A869E700034C5F4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A81B8DD1A869E700034C5F4 /* Images.xcassets */; };
 		6A81B8ED1A869E700034C5F4 /* ConsoleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A81B8EC1A869E700034C5F4 /* ConsoleTests.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A2A85691A87104900DCDB0F /* ParentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentView.swift; sourceTree = "<group>"; };
 		6A81B8D11A869E700034C5F4 /* Console.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Console.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A81B8D51A869E700034C5F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A81B8D61A869E700034C5F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				6A81B8D41A869E700034C5F4 /* Supporting Files */,
 				6A81B8F61A86A14E0034C5F4 /* Knob.swift */,
 				6A81B8F81A86AFCC0034C5F4 /* ColorKnob.swift */,
+				6A2A85691A87104900DCDB0F /* ParentView.swift */,
 			);
 			path = Console;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A2A856A1A87104900DCDB0F /* ParentView.swift in Sources */,
 				6A81B8D71A869E700034C5F4 /* AppDelegate.swift in Sources */,
 				6A81B8F71A86A14E0034C5F4 /* Knob.swift in Sources */,
 				6A81B8F91A86AFCC0034C5F4 /* ColorKnob.swift in Sources */,
@@ -384,6 +388,7 @@
 				6A81B8F21A869E700034C5F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6A81B8F31A869E700034C5F4 /* Build configuration list for PBXNativeTarget "ConsoleTests" */ = {
 			isa = XCConfigurationList;
@@ -392,6 +397,7 @@
 				6A81B8F51A869E700034C5F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

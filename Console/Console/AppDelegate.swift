@@ -20,10 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.makeKeyAndVisible() //if when I unwrap window and it's nill do no op
         
-        var knob: ColorKnob = ColorKnob(frame: window!.frame) //window can't be null for this to work
-        knob.backgroundColor = UIColor.darkGrayColor()	
-        window?.addSubview(knob)
         
+
         
         return true
     }
