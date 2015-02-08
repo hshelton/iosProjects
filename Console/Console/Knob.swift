@@ -8,6 +8,15 @@
 
 import UIKit
 
+//describe delegate protocol
+protocol KnobDelegate: class
+{
+    
+    func knob(knob: Knob, rotatedToAngle angle: Float)
+}
+
+
+
 /*
 * A user controlled circular knob for selecting and controlling values
 *
@@ -15,8 +24,18 @@ import UIKit
 class Knob : UIView
 {
     private var _knobRect: CGRect = CGRectZero
-    var angle: Float = 3 * Float(M_PI)/2.0 // the angle of the nib
-    
+    private var _angle: Float = 3 * Float(M_PI)/2.0 // the angle of the nib
+    var angle: Float{
+        get {return _angle}
+        set
+        {
+            _angle = newValue
+            setNeedsDisplay()
+        }
+    }
+    //delegate property
+    weak var delegate: KnobDelegate? = nil
+
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
     {
@@ -26,7 +45,7 @@ class Knob : UIView
         let touchAngle : Float = atan2(Float(touchPoint.y - _knobRect.midY), Float(touchPoint.x - _knobRect.midX))
         
         angle = touchAngle
-        setNeedsDisplay()
+        delegate?.knob(self, rotatedToAngle: angle) //invoke the delegate
     }
     
     //dirty portion of the view that gets redrawn

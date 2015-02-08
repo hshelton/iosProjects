@@ -8,6 +8,15 @@
 
 import UIKit
 
+
+protocol ColorKnobDelegate: class
+{
+    
+    func colorKnob(colorKnob: ColorKnob, getRedValue value: CGFloat)
+    func colorKnob(colorKnob: ColorKnob, getGreenValue value: CGFloat)
+    func colorKnob(colorKnob: ColorKnob, getBlueValue value: CGFloat)
+}
+
 /*
 * A user controlled circular knob for selecting and controlling values
 *
@@ -17,17 +26,19 @@ class ColorKnob : UIView
      var _knobRect: CGRect = CGRectZero
     var angle: Float = 3 * Float(M_PI)/2.0 // the angle of the nib
     private let nibScale : CGFloat = 0.08
-    var redVal = 255.0
-    var whiteVal = 255.0
-    var blueval = 255.0
+    var redVal: CGFloat = CGFloat(255.0)
+    var greenVal: CGFloat = CGFloat(255.0)
+    var blueVal: CGFloat = CGFloat(255.0)
     private var nibRadius: CGFloat = 0.0
      var _xCoord :CGFloat = 0.0
     var _yCoord :CGFloat = 0.0
+    
     private var maxDistFromOrigin :CGFloat = 0.0
     private var nibOriginY : CGFloat = 0.0
     private var nibOriginX : CGFloat = 0.0
     
-    
+    //delegate property
+    weak var delegate: ColorKnobDelegate? = nil
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
     {
@@ -38,9 +49,18 @@ class ColorKnob : UIView
         
         _xCoord = touchPoint.x
         _yCoord = touchPoint.y
-        angle = touchAngle
-        setNeedsDisplay()
         
+        let maxRGB: CGFloat = CGFloat(255.0)
+        
+        //defines how the RGB values are calculated
+        redVal = min(maxRGB, touchPoint.x )
+        greenVal = min(maxRGB, touchPoint.y)
+        blueVal = min(maxRGB, touchPoint.x)
+       // angle = touchAngle
+        setNeedsDisplay()
+        delegate?.colorKnob(self, getRedValue : redVal)
+        delegate?.colorKnob(self, getBlueValue : blueVal)
+        delegate?.colorKnob(self, getGreenValue : greenVal)
         
     }
     
@@ -82,21 +102,21 @@ class ColorKnob : UIView
         CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
    
         CGContextDrawPath(context, kCGPathFill)
-        
         //draw the rainbow inside of the inscribing circle
-        let arcCenter: CGPoint = CGPoint(x:inscribe.midX, y:inscribe.midY); let radius:CGFloat = CGFloat(inscribe.width); let startAngle:CGFloat = CGFloat(270)
-        let endAngle:CGFloat = CGFloat(90.0); let clockwise:Bool = true
+        let arcCenter: CGPoint = CGPoint(x:inscribe.midX, y:inscribe.midY); let radius:CGFloat = CGFloat(inscribe.width/4); let startAngle:CGFloat = CGFloat(0.0)
+        let endAngle:CGFloat = CGFloat(360.0); let clockwise:Bool = true
         let bezierPath: CGPath = UIBezierPath(arcCenter:arcCenter, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise).CGPath
         
-        let cap : CGLineCap = CGLineCap(0); let join:CGLineJoin = CGLineJoin(1); let mLim: CGFloat = 4.0; let lWidth: CGFloat = 2.0
+        let cap : CGLineCap = CGLineCap(0); let join:CGLineJoin = CGLineJoin(1); let mLim: CGFloat = 4.0; let lWidth: CGFloat = inscribe.width/2
         let transform: UnsafePointer<CGAffineTransform> = UnsafePointer<CGAffineTransform>()
         //can transofrm remain nil?
-        
         CGContextSetRGBStrokeColor(context, 3.0, 33.0, 2.0, 1.0)
         CGContextSetFillColorWithColor(context, UIColor.greenColor().CGColor)
         let arc:CGPath = CGPathCreateCopyByStrokingPath(bezierPath, transform, lWidth, cap, join, mLim)
         CGContextAddPath(context, arc)
         CGContextDrawPath(context, kCGPathFillStroke)
+        
+        
         
         var nibRect = CGRectZero
         nibRect.size.width = _knobRect.width * nibScale
@@ -141,7 +161,11 @@ class ColorKnob : UIView
         
         return (x, y)
         
-        
-        
     }
+    
+    
+    
+    
+
 }
+

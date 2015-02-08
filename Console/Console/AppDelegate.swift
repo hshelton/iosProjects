@@ -10,7 +10,7 @@ import UIKit
 
 @UIApplicationMain
 //AppDelegate corresponds to these two protocols
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, ParentViewDelegate{
 
     var window: UIWindow?
     
@@ -20,13 +20,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.makeKeyAndVisible() //if when I unwrap window and it's nill do no op
         
+       var baseView: ParentView = ParentView(frame: window!.frame)
         
+       // var knob: Knob = Knob(frame: window!.frame)
+        
+        baseView.delegate = self //delegate conformity
+        window?.addSubview(baseView)
 
         
         return true
     }
 
-
-
+    func parentView(parentView: ParentView, redvalueselected redVal: CGFloat, greenvalueselected greenVal: CGFloat, bluevalueselected blueVal: CGFloat) {
+        println("red \(redVal) green \(greenVal) blue \(blueVal)")
+        
+    }
+    
 }
 
