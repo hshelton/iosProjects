@@ -19,20 +19,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ParentViewDelegate{
     
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.makeKeyAndVisible() //if when I unwrap window and it's nill do no op
+        window?.backgroundColor = UIColor.grayColor()
         
-       var baseView: ParentView = ParentView(frame: window!.frame)
+      // var baseView: ParentView = ParentView(frame: window!.frame)
+       // baseView.delegate = self //delegate conformity
+       // window?.addSubview(baseView)
         
-       // var knob: Knob = Knob(frame: window!.frame)
-        
-        baseView.delegate = self //delegate conformity
-        window?.addSubview(baseView)
-
+        let slider : CustomSlider = CustomSlider(frame:CGRectZero)
+        slider.frame = CGRect(x: 10.0, y: 64.0, width: window!.frame.width * 0.9, height: 32.0)
+        slider.backgroundColor = UIColor.redColor()
+        window?.addSubview(slider)
         
         return true
     }
-
-    func parentView(parentView: ParentView, redvalueselected redVal: CGFloat, greenvalueselected greenVal: CGFloat, bluevalueselected blueVal: CGFloat) {
+    
+        func parentView(parentView: ParentView, redvalueselected redVal: CGFloat, greenvalueselected greenVal: CGFloat, bluevalueselected blueVal: CGFloat) {
         println("red \(redVal) green \(greenVal) blue \(blueVal)")
+        
         
     }
     

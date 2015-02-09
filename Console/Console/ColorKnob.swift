@@ -137,6 +137,8 @@ class ColorKnob : UIView
         CGContextSetLineWidth(context, 20.0)
         CGContextDrawPath(context, kCGPathStroke)
         
+  
+        
         
         
         
