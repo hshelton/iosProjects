@@ -13,13 +13,14 @@ class ValueSlider : UIView
     //used for parent view to keep track of it's ValueSlider(s)
     private var name: String! = nil
     
-    private var max: Int = 255
-    private var min: Int = 0
+    private var maxV: Int = 255
+    private var minV: Int = 0
     private var value: Int = 0
     
     var _trackRect: CGRect = CGRectZero
     var _thumbRect: CGRect = CGRectZero
-    var _knobRect: CGRect = CGRectZero
+    var thumbColor: CGColor = UIColor.blackColor().CGColor
+    var trackColor: CGColor = UIColor.darkGrayColor().CGColor
     
     private var minXSliderValue: CGFloat = 0.0
     private var maxXSliderValue: CGFloat = 0.0
@@ -63,10 +64,10 @@ class ValueSlider : UIView
         //draw the track bar as a rectangle
         _trackRect.size.height = bounds.height / 8
         _trackRect.origin.y = bounds.height / 2 - _trackRect.size.height/2
-        _trackRect.origin.x = bounds.width * 0.025
-        _trackRect.size.width = bounds.width * 0.95
+        _trackRect.origin.x = bounds.width * 0.05
+        _trackRect.size.width = bounds.width * 0.90
         CGContextAddRect(context, _trackRect)
-        CGContextSetFillColorWithColor(context, UIColor.darkGrayColor().CGColor)
+        CGContextSetFillColorWithColor(context, trackColor)
         CGContextDrawPath(context, kCGPathFill)
         
         //draw the thumb bar as a rectangle
@@ -75,11 +76,11 @@ class ValueSlider : UIView
         _thumbRect.origin.x = bounds.width * 0.025 + sliderXOffset
         _thumbRect.size.width = _trackRect.size.width / 8
         CGContextAddRect(context, _thumbRect)
-        CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor)
+        CGContextSetFillColorWithColor(context, thumbColor)
         CGContextDrawPath(context, kCGPathFill)
         
-        maxXSliderValue = _thumbRect.maxX
-        minXSliderValue = _thumbRect.minX
+        maxXSliderValue = _trackRect.maxX - (_thumbRect.width + 0.025 * bounds.width)
+        minXSliderValue = _trackRect.minX
         
         
     }
@@ -90,9 +91,42 @@ class ValueSlider : UIView
         let touch : UITouch = touches.anyObject() as UITouch //we know touch is a UITouch so cast it
         //where was that touch
         let touchPoint : CGPoint = touch.locationInView(self)
-       sliderXOffset = min(touchPoint.x, maxXSliderValue)
+      
+        if(touchPoint.x > maxXSliderValue )
+        {
+            sliderXOffset = maxXSliderValue
+           
+        }
+        else if(touchPoint.x < CGFloat(minV))
+        {
+            sliderXOffset = 0
+            _trackRect.origin.x = bounds.width * 0.025
+            value = 0
+        }
+        else
+        {
+            sliderXOffset = touchPoint.x
+        }
         setNeedsDisplay()
 
+        let range:CGFloat = maxXSliderValue - minXSliderValue
+        
+        
+        let ans: CGFloat = round (CGFloat(maxV) * CGFloat(sliderXOffset) / CGFloat(maxV))
+        if(Int(ans) > maxV)
+        {
+            value = maxV
+        }
+ 
+        else
+        {
+          value = Int(ans)
+        }
+        
+        
+       // println(value)
+        delegate?.valueChanged(self, value: value)
+        
         
         
     }
@@ -102,5 +136,5 @@ class ValueSlider : UIView
 //objects who want to communicate with the valueSlider should conform to this protocol
 protocol ValueSliderDelegate : class
 {
-    func valueChanged(slider: ValueSlider, value:ValueSlider)
+    func valueChanged(slider: ValueSlider, value: Int)
 }
