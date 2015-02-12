@@ -21,6 +21,11 @@ class ValueSlider : UIView
     var _thumbRect: CGRect = CGRectZero
     var _knobRect: CGRect = CGRectZero
     
+    private var minXSliderValue: CGFloat = 0.0
+    private var maxXSliderValue: CGFloat = 0.0
+    private var sliderXOffset: CGFloat = 0.0
+    
+    
     //delegate property
     weak var delegate: ValueSliderDelegate? = nil
     
@@ -54,16 +59,43 @@ class ValueSlider : UIView
             _trackRect.size.height = height
         }
         
-       // CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor)
-     //   CGContextAddRect(context, _trackRect)
-      //  CGContextDrawPath(context, kCGPathFill)
-     //
-        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
-        CGContextAddLineToPoint(context, 3.2, 45.0)
-        CGContextDrawPath(context, kCGPathFillStroke)
+        
+        //draw the track bar as a rectangle
+        _trackRect.size.height = bounds.height / 8
+        _trackRect.origin.y = bounds.height / 2 - _trackRect.size.height/2
+        _trackRect.origin.x = bounds.width * 0.025
+        _trackRect.size.width = bounds.width * 0.95
+        CGContextAddRect(context, _trackRect)
+        CGContextSetFillColorWithColor(context, UIColor.darkGrayColor().CGColor)
+        CGContextDrawPath(context, kCGPathFill)
+        
+        //draw the thumb bar as a rectangle
+        _thumbRect.size.height = _trackRect.size.height * 3
+        _thumbRect.origin.y = bounds.height / 2 - _trackRect.size.height * 1.5
+        _thumbRect.origin.x = bounds.width * 0.025 + sliderXOffset
+        _thumbRect.size.width = _trackRect.size.width / 8
+        CGContextAddRect(context, _thumbRect)
+        CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor)
+        CGContextDrawPath(context, kCGPathFill)
+        
+        maxXSliderValue = _thumbRect.maxX
+        minXSliderValue = _thumbRect.minX
+        
         
     }
     
+    
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
+    {
+        let touch : UITouch = touches.anyObject() as UITouch //we know touch is a UITouch so cast it
+        //where was that touch
+        let touchPoint : CGPoint = touch.locationInView(self)
+       sliderXOffset = min(touchPoint.x, maxXSliderValue)
+        setNeedsDisplay()
+
+        
+        
+    }
     
     
 }
