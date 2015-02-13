@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A0D118F1A8D808F000DA6D1 /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A0D118E1A8D808F000DA6D1 /* checkerboard.png */; };
 		6A3800211A897DE6002D9C90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3800201A897DE6002D9C90 /* AppDelegate.swift */; };
 		6A3800281A897DE6002D9C90 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A3800271A897DE6002D9C90 /* Images.xcassets */; };
 		6A3800371A897DE6002D9C90 /* RGBColorChooserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3800361A897DE6002D9C90 /* RGBColorChooserTests.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A0D118E1A8D808F000DA6D1 /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkerboard.png; path = ../../../../Downloads/checkerboard.png; sourceTree = "<group>"; };
 		6A38001B1A897DE6002D9C90 /* RGBColorChooser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RGBColorChooser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A38001F1A897DE6002D9C90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A3800201A897DE6002D9C90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 		6A38001D1A897DE6002D9C90 /* RGBColorChooser */ = {
 			isa = PBXGroup;
 			children = (
+				6A0D118E1A8D808F000DA6D1 /* checkerboard.png */,
 				6A3800201A897DE6002D9C90 /* AppDelegate.swift */,
 				6A3800271A897DE6002D9C90 /* Images.xcassets */,
 				6A38001E1A897DE6002D9C90 /* Supporting Files */,
@@ -194,6 +197,7 @@
 			files = (
 				6A3800281A897DE6002D9C90 /* Images.xcassets in Resources */,
 				6A3800471A89815A002D9C90 /* Default-568h@2x.png in Resources */,
+				6A0D118F1A8D808F000DA6D1 /* checkerboard.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
