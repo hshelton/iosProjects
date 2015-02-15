@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
+        //setting the root view controller to an instance of PaintViewController
         window?.rootViewController = PaintViewController()
         window?.makeKeyAndVisible()
         
