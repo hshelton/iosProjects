@@ -13,13 +13,14 @@ import Foundation
 */
 class Drawing
 {
+    /* internals section */
+    private var _lineArray : [Polyline] = []
     
     struct PointF
     {
         var x: Float
         var y: Float
     }
-    
     struct Color
     {
         var r: Float
@@ -27,21 +28,23 @@ class Drawing
         var b: Float
         var a: Float
     }
-    
-    /*
-    * A Polyline is a set of points and a line color
-    *
-    */
     struct Polyline
     {
         var points: [PointF]
         var color: Color
     }
+    /* */
     
-    var polylineCount: Int {return 3}
+    /* public section */
+    
+    var polylineCount: Int {return _lineArray.count}
+    
     
     func polylineAtIndex(polylineIndex: Int) -> Polyline
     {
-        return Polyline(points: [PointF(x:0.0, y:0.0), PointF(x:1.1, y: 8.6)], color: Color(r: 1.0, g: 1.0, b: 1.0, a: 1.0))
+        return _lineArray[polylineIndex]
     }
+    
+    
+    /* */
 }
