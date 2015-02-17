@@ -14,18 +14,21 @@ class PaintViewController: UIViewController, colorUpdate {
     var paintView: PaintView {return view as PaintView}
     var chooser: ColorChooserController = ColorChooserController()
     
+
     override func loadView()
     {
         
         //TODO: add steps 4 and 5 to register color updates
         
         view = PaintView()
+        
         view.backgroundColor = UIColor.whiteColor()
         
         
         var colorButton : UIBarButtonItem = UIBarButtonItem(title: "Color", style: UIBarButtonItemStyle.Bordered, target: self, action: "popView")
         self.navigationController?.navigationBar.backgroundColor = chooser.colorChosen
         
+        chooser.getUpdate = self
        
         
     
@@ -38,7 +41,7 @@ class PaintViewController: UIViewController, colorUpdate {
     {
         
         self.navigationController?.pushViewController(chooser, animated: true)
-       
+        
         
         
        
@@ -48,6 +51,11 @@ class PaintViewController: UIViewController, colorUpdate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+    }
+    
+    func getUpdate(instance: ColorChooserController, colorSelected: UIColor)
+    {
+        self.navigationController?.navigationBar.tintColor = colorSelected
     }
     
     
