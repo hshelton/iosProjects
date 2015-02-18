@@ -13,19 +13,19 @@ class PaintViewController: UIViewController, colorUpdate {
     //gives outside classes ability to mess with the paint view
     var paintView: PaintView {return view as PaintView}
     var chooser: ColorChooserController = ColorChooserController()
-    
+    var underlyingView = PaintView()
 
     override func loadView()
     {
         
         //TODO: add steps 4 and 5 to register color updates
         
-        view = PaintView()
+        view = underlyingView
         
-        view.backgroundColor = UIColor.whiteColor()
+        //underlyingView.backgroundColor = UIColor.whiteColor()
         
         
-        var colorButton : UIBarButtonItem = UIBarButtonItem(title: "Color", style: UIBarButtonItemStyle.Bordered, target: self, action: "popView")
+        var colorButton : UIBarButtonItem = UIBarButtonItem(title: "Color", style: UIBarButtonItemStyle.Plain, target: self, action: "popView")
         self.navigationController?.navigationBar.backgroundColor = chooser.colorChosen
         
         chooser.getUpdate = self
@@ -41,10 +41,7 @@ class PaintViewController: UIViewController, colorUpdate {
     {
         
         self.navigationController?.pushViewController(chooser, animated: true)
-        
-        
-        
-       
+
     }
 
     override func viewDidLoad() {
@@ -55,7 +52,11 @@ class PaintViewController: UIViewController, colorUpdate {
     
     func getUpdate(instance: ColorChooserController, colorSelected: UIColor)
     {
-        self.navigationController?.navigationBar.tintColor = colorSelected
+        //TO DO: Set a display color box equal to chosen color
+        //set paintview's color to color chosen
+        underlyingView.strokeColor = colorSelected.CGColor
+    
+        
     }
     
     

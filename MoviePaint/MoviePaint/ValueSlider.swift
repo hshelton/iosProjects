@@ -85,6 +85,14 @@ class ValueSlider : UIView
         
     }
     
+    func moveToMax()
+    {
+        value = maxV
+
+        delegate?.valueChanged(self, value: value)
+        
+    }
+    
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
     {

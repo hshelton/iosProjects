@@ -68,11 +68,14 @@ class ChooserSubviewManager : UIView, ValueSliderDelegate
         addSubview(_greenSlider)
         
         _alphaSlider = ValueSlider(frame: frame)
+        
         _alphaSlider.setName("alpha")
         _alphaSlider.backgroundColor = bg
         _alphaSlider.thumbColor = UIColor.blackColor().CGColor
          _alphaSlider.delegate = self
+       
         addSubview(_alphaSlider)
+       
         
         _restrictedView = UIView(frame: frame)
         _restrictedView.backgroundColor = UIColor(patternImage: UIImage(named:"checkerboard.png")!)
@@ -81,14 +84,15 @@ class ChooserSubviewManager : UIView, ValueSliderDelegate
         _padView = UIView(frame: frame)
         _padView.backgroundColor = UIColor.whiteColor()
         addSubview(_padView)
-        
-        
-        //  _UIRGBCOLOR = UIColor(red: _redValue, green:  _greenValue, blue: _blueValue, alpha: _alphaValue)
+       // _alphaSlider.moveToMax()
+          _UIRGBCOLOR = UIColor(red: _redValue, green:  _greenValue, blue: _blueValue, alpha: _alphaValue)
        // _currentView.backgroundColor = _UIRGBCOLOR
 
         _currentView = UIView(frame: _restrictedView.frame)
         _restrictedView.addSubview(_currentView)
         
+        
+        setNeedsDisplay()
     }
     
    override func layoutSubviews() {
@@ -96,10 +100,12 @@ class ChooserSubviewManager : UIView, ValueSliderDelegate
     
     
     (_padView.frame, r) = r.rectsByDividing(r.height/7, fromEdge: CGRectEdge.MinYEdge)
-    (_redSlider.frame, r) = r.rectsByDividing(r.height/6, fromEdge: CGRectEdge.MinYEdge)
-    (_greenSlider.frame, r) = r.rectsByDividing(r.height/5, fromEdge: CGRectEdge.MinYEdge)
-    (_blueSlider.frame, r) = r.rectsByDividing(r.height/4, fromEdge: CGRectEdge.MinYEdge)
-    (_alphaSlider.frame, r) = r.rectsByDividing(r.height/3, fromEdge: CGRectEdge.MinYEdge)
+    (_alphaSlider.frame, r) = r.rectsByDividing(r.height/6, fromEdge: CGRectEdge.MinYEdge)
+    (_redSlider.frame, r) = r.rectsByDividing(r.height/5, fromEdge: CGRectEdge.MinYEdge)
+    (_greenSlider.frame, r) = r.rectsByDividing(r.height/4, fromEdge: CGRectEdge.MinYEdge)
+    (_blueSlider.frame, r) = r.rectsByDividing(r.height/3, fromEdge: CGRectEdge.MinYEdge)
+
+    
     (_restrictedView.frame, r) = r.rectsByDividing(r.height, fromEdge: CGRectEdge.MinYEdge)
     _currentView.frame = _restrictedView.frame
 
@@ -144,7 +150,7 @@ class ChooserSubviewManager : UIView, ValueSliderDelegate
     
     //update those who are interested that we've chosen a new color
     delegate?.chooserSubviewManager(self, colorSelected: _UIRGBCOLOR)
-    setNeedsDisplay()
+  //  setNeedsDisplay()
     
     }
     
