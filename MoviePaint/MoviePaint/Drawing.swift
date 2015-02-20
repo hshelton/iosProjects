@@ -45,6 +45,44 @@ class Drawing
         return _lineArray[polylineIndex]
     }
     
+    func appendPolyline(polyline: Polyline)
+    {
+        _lineArray.append(polyline)
+    }
     
+    /*
+    * Save drawing to file using plist format
+    *
+    func writeToFile(path:String)
+    {
+        var drawingArray: NSMutableArray = []
+        
+        //TODO: Build up object graph
+        for Polyline in _lineArray
+        {
+            let polyLineColor: NSDictionary = [
+                
+                "r": Polyline.color.r,
+                "g": Polyline.color.g,
+                "b": Polyline.color.b,
+                "a": Polyline.color.a]
+            
+            var polyLinePoints: NSMutableArray = []
+            
+            for point in Polyline.points
+            {
+                let pointDictionary: NSDictionary = ["x": point.x, "y": point.y]
+    TODO: Finish the rest of this function
+            }
+            
+            let dictionary: NSDictionary = ["points": Polyline.points, "color": Polyline.color]
+            drawingArray.addObject(dictionary)
+            
+        }
+        
+        drawingArray.writeToFile(path, atomically: true)
+        
+    }
+*/
     /* */
 }

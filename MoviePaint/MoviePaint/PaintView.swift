@@ -71,14 +71,20 @@ class PaintView : UIView
         
        
         let context: CGContext = UIGraphicsGetCurrentContext()
+<<<<<<< HEAD
   
         CGContextSetLineWidth(context, 50.0)
+=======
+        CGContextSetStrokeColorWithColor(context, strokeColor)
+        CGContextSetLineWidth(context, 8.0)
+>>>>>>> FETCH_HEAD
         CGContextSetLineCap(context, CGLineCap(1))
         //CGContextSetLineCap(context, CGLineCap)
 
         
         //hint given at time this was typed
         
+<<<<<<< HEAD
         //draw all the other lines
         for coloredPolyline in _polylines
         {
@@ -107,6 +113,9 @@ class PaintView : UIView
         
         //draw current line
         CGContextSetStrokeColorWithColor(context, strokeColor)
+=======
+        /*
+>>>>>>> FETCH_HEAD
         for(var pointIndex: Int = 0; pointIndex < _points.count; pointIndex++)
         {
             //let point: CGPoint = _points[pointIndex]
@@ -123,10 +132,11 @@ class PaintView : UIView
         }
         
         CGContextDrawPath(context, kCGPathStroke)
-        
+        */
         
         
         /* optional way of drawing
+        */
         for(var pLIndex:Int = 0; pLIndex < _polylines.count; pLIndex++)
         {
 
@@ -149,7 +159,7 @@ class PaintView : UIView
         
                 CGContextDrawPath(context, kCGPathStroke)
         }
-        */
+        
     
     }
     
