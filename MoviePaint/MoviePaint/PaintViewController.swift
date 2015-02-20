@@ -22,8 +22,8 @@ class PaintViewController: UIViewController, colorUpdate {
         
         view = underlyingView
         
-        //underlyingView.backgroundColor = UIColor.whiteColor()
-        
+        underlyingView.backgroundColor = UIColor.whiteColor()
+    
         
         var colorButton : UIBarButtonItem = UIBarButtonItem(title: "Color", style: UIBarButtonItemStyle.Plain, target: self, action: "popView")
         self.navigationController?.navigationBar.backgroundColor = chooser.colorChosen

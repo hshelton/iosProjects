@@ -22,14 +22,9 @@ class ColorChooserController: UIViewController, colorDelegate {
     
     override func loadView()
     {
-        
         var toLoad : ChooserSubviewManager = ChooserSubviewManager()
         toLoad.delegate = self
         view = toLoad
-        
-        
-       // view.backgroundColor = UIColor.whiteColor()
-
         
     }
     
