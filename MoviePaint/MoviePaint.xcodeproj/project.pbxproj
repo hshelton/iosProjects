@@ -13,7 +13,11 @@
 		6A5F36B41A8C2A380034CBA8 /* PaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5F36B31A8C2A380034CBA8 /* PaintView.swift */; };
 		6A5F36B61A8C2BEA0034CBA8 /* PaintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5F36B51A8C2BEA0034CBA8 /* PaintViewController.swift */; };
 		6A5F36B81A8C2C060034CBA8 /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5F36B71A8C2C060034CBA8 /* Drawing.swift */; };
-		BCDA85061A92702D0022FB5D /* ChooserSubviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDA85041A92702D0022FB5D /* ChooserSubviewManager.swift */; };
+		6AE509231A97E74000215C45 /* WatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE509221A97E74000215C45 /* WatchViewController.swift */; };
+		6AE509251A97E91D00215C45 /* WatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE509241A97E91D00215C45 /* WatchView.swift */; };
+		6AE509271A97EF4600215C45 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6AE509261A97EF4600215C45 /* Default-568h@2x.png */; };
+		6AE509291A97F65F00215C45 /* WatchBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE509281A97F65F00215C45 /* WatchBaseView.swift */; };
+		BCDA85061A92702D0022FB5D /* ChooserBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDA85041A92702D0022FB5D /* ChooserBaseView.swift */; };
 		BCDA85071A92702D0022FB5D /* ValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDA85051A92702D0022FB5D /* ValueSlider.swift */; };
 		BCDA850D1A9276670022FB5D /* ColorChooserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDA850C1A9276670022FB5D /* ColorChooserController.swift */; };
 		BCDA85161A927BE70022FB5D /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = BCDA85181A927BE70022FB5D /* checkerboard.png */; };
@@ -40,7 +44,11 @@
 		6A5F36B31A8C2A380034CBA8 /* PaintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaintView.swift; sourceTree = "<group>"; };
 		6A5F36B51A8C2BEA0034CBA8 /* PaintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaintViewController.swift; sourceTree = "<group>"; };
 		6A5F36B71A8C2C060034CBA8 /* Drawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
-		BCDA85041A92702D0022FB5D /* ChooserSubviewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooserSubviewManager.swift; sourceTree = "<group>"; };
+		6AE509221A97E74000215C45 /* WatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchViewController.swift; sourceTree = "<group>"; };
+		6AE509241A97E91D00215C45 /* WatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
+		6AE509261A97EF4600215C45 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6AE509281A97F65F00215C45 /* WatchBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchBaseView.swift; sourceTree = "<group>"; };
+		BCDA85041A92702D0022FB5D /* ChooserBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooserBaseView.swift; sourceTree = "<group>"; };
 		BCDA85051A92702D0022FB5D /* ValueSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSlider.swift; sourceTree = "<group>"; };
 		BCDA850C1A9276670022FB5D /* ColorChooserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorChooserController.swift; sourceTree = "<group>"; };
 		BCDA85171A927BE70022FB5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = Base.lproj/checkerboard.png; sourceTree = "<group>"; };
@@ -67,6 +75,7 @@
 		6A5F36851A8C29CE0034CBA8 = {
 			isa = PBXGroup;
 			children = (
+				6AE509261A97EF4600215C45 /* Default-568h@2x.png */,
 				6A5F36901A8C29CE0034CBA8 /* MoviePaint */,
 				6A5F36A61A8C29CF0034CBA8 /* MoviePaintTests */,
 				6A5F368F1A8C29CE0034CBA8 /* Products */,
@@ -134,6 +143,7 @@
 			children = (
 				6A5F36B51A8C2BEA0034CBA8 /* PaintViewController.swift */,
 				BCDA850C1A9276670022FB5D /* ColorChooserController.swift */,
+				6AE509221A97E74000215C45 /* WatchViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -141,9 +151,11 @@
 		BCDA850A1A9270500022FB5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BCDA85041A92702D0022FB5D /* ChooserSubviewManager.swift */,
+				BCDA85041A92702D0022FB5D /* ChooserBaseView.swift */,
 				BCDA85051A92702D0022FB5D /* ValueSlider.swift */,
 				6A5F36B31A8C2A380034CBA8 /* PaintView.swift */,
+				6AE509241A97E91D00215C45 /* WatchView.swift */,
+				6AE509281A97F65F00215C45 /* WatchBaseView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -246,6 +258,7 @@
 			files = (
 				BCDA85161A927BE70022FB5D /* checkerboard.png in Resources */,
 				6A5F369B1A8C29CF0034CBA8 /* Images.xcassets in Resources */,
+				6AE509271A97EF4600215C45 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +277,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A5F36B81A8C2C060034CBA8 /* Drawing.swift in Sources */,
-				BCDA85061A92702D0022FB5D /* ChooserSubviewManager.swift in Sources */,
+				BCDA85061A92702D0022FB5D /* ChooserBaseView.swift in Sources */,
+				6AE509231A97E74000215C45 /* WatchViewController.swift in Sources */,
+				6AE509291A97F65F00215C45 /* WatchBaseView.swift in Sources */,
+				6AE509251A97E91D00215C45 /* WatchView.swift in Sources */,
 				BCDA850D1A9276670022FB5D /* ColorChooserController.swift in Sources */,
 				BCDA85071A92702D0022FB5D /* ValueSlider.swift in Sources */,
 				6A5F36941A8C29CF0034CBA8 /* AppDelegate.swift in Sources */,

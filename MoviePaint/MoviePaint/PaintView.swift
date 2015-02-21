@@ -8,9 +8,16 @@
 
 import UIKit
 
+protocol ModelUpdater: class
+{
+    func receiveLine(linepoints: [CGPoint], color: CGColor)
+}
+
+
 class PaintView : UIView
 {
     
+
     
     struct coloredPointArray
     {
@@ -30,6 +37,9 @@ class PaintView : UIView
     
     var strokeColor: CGColor = UIColor.blackColor().CGColor
     
+    weak var delegate: ModelUpdater?
+    
+    
     private func collectPointFromTouch(touch: UITouch)
     {
         let touchPoint: CGPoint = touch.locationInView(self)
@@ -41,22 +51,25 @@ class PaintView : UIView
  
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         collectPointFromTouch(touches.anyObject() as UITouch)
-        println("Polyline began with count \(_points.count)")
+      //  println("Polyline began with count \(_points.count)")
         setNeedsDisplay()
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         collectPointFromTouch(touches.anyObject() as UITouch)
-        println("Polyline moved with count \(_points.count)")
+       // println("Polyline moved with count \(_points.count)")
          setNeedsDisplay()
     }
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
          collectPointFromTouch(touches.anyObject() as UITouch)
-        println("Polyline ended with count \(_points.count)")
+      //  println("Polyline ended with count \(_points.count)")
         
 
         let toAdd: coloredPointArray  = coloredPointArray(pointArray: _points, color: self.strokeColor)
+       
+        delegate?.receiveLine(_points, color: self.strokeColor)
+        
         _polylines.append(toAdd)
         setNeedsDisplay()
         _points = [] //clear out points
@@ -65,6 +78,9 @@ class PaintView : UIView
         
         //TODO: call delegate method with polyline that was just completed
     }
+    
+    
+    //save points x points as a percentage of the screen width, save y points as a percentage of the screen height. When I go to draw them I would just multiply x by screen width and y by screen height
     
     override func drawRect(rect: CGRect) {
         //TODO: this method will iterate through the polylines and draw them to the screen

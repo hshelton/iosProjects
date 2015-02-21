@@ -118,7 +118,7 @@ class ChooserSubviewManager : UIView, ValueSliderDelegate
         assert(false, "Unsupported")
     }
     
-
+    
     
     
    func valueChanged(slider: ValueSlider, value: Int)
