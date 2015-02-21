@@ -66,8 +66,8 @@ class PaintView : UIView
       //  println("Polyline ended with count \(_points.count)")
         
 
-        let toAdd: coloredPointArray  = coloredPointArray(pointArray: _points, color: self.strokeColor)
-       
+        let toAdd: coloredPointArray = coloredPointArray(pointArray: _points, color: self.strokeColor)
+        
         delegate?.receiveLine(_points, color: self.strokeColor)
         
         _polylines.append(toAdd)
@@ -89,10 +89,10 @@ class PaintView : UIView
         let context: CGContext = UIGraphicsGetCurrentContext()
 
   
-        CGContextSetLineWidth(context, 50.0)
+ 
 
         CGContextSetStrokeColorWithColor(context, strokeColor)
-        CGContextSetLineWidth(context, 8.0)
+        CGContextSetLineWidth(context, 10.0)
 
         CGContextSetLineCap(context, CGLineCap(1))
         //CGContextSetLineCap(context, CGLineCap)

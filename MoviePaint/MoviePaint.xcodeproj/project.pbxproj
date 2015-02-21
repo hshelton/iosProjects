@@ -11,7 +11,7 @@
 		6A5F369B1A8C29CF0034CBA8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A5F369A1A8C29CF0034CBA8 /* Images.xcassets */; };
 		6A5F36AA1A8C29CF0034CBA8 /* MoviePaintTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5F36A91A8C29CF0034CBA8 /* MoviePaintTests.swift */; };
 		6A5F36B41A8C2A380034CBA8 /* PaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5F36B31A8C2A380034CBA8 /* PaintView.swift */; };
-		6A5F36B61A8C2BEA0034CBA8 /* PaintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5F36B51A8C2BEA0034CBA8 /* PaintViewController.swift */; };
+		6A5F36B61A8C2BEA0034CBA8 /* BaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5F36B51A8C2BEA0034CBA8 /* BaseController.swift */; };
 		6A5F36B81A8C2C060034CBA8 /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5F36B71A8C2C060034CBA8 /* Drawing.swift */; };
 		6AE509231A97E74000215C45 /* WatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE509221A97E74000215C45 /* WatchViewController.swift */; };
 		6AE509251A97E91D00215C45 /* WatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE509241A97E91D00215C45 /* WatchView.swift */; };
@@ -42,7 +42,7 @@
 		6A5F36A81A8C29CF0034CBA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A5F36A91A8C29CF0034CBA8 /* MoviePaintTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePaintTests.swift; sourceTree = "<group>"; };
 		6A5F36B31A8C2A380034CBA8 /* PaintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaintView.swift; sourceTree = "<group>"; };
-		6A5F36B51A8C2BEA0034CBA8 /* PaintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaintViewController.swift; sourceTree = "<group>"; };
+		6A5F36B51A8C2BEA0034CBA8 /* BaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseController.swift; sourceTree = "<group>"; };
 		6A5F36B71A8C2C060034CBA8 /* Drawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
 		6AE509221A97E74000215C45 /* WatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchViewController.swift; sourceTree = "<group>"; };
 		6AE509241A97E91D00215C45 /* WatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		BCDA85091A9270490022FB5D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6A5F36B51A8C2BEA0034CBA8 /* PaintViewController.swift */,
+				6A5F36B51A8C2BEA0034CBA8 /* BaseController.swift */,
 				BCDA850C1A9276670022FB5D /* ColorChooserController.swift */,
 				6AE509221A97E74000215C45 /* WatchViewController.swift */,
 			);
@@ -284,7 +284,7 @@
 				BCDA850D1A9276670022FB5D /* ColorChooserController.swift in Sources */,
 				BCDA85071A92702D0022FB5D /* ValueSlider.swift in Sources */,
 				6A5F36941A8C29CF0034CBA8 /* AppDelegate.swift in Sources */,
-				6A5F36B61A8C2BEA0034CBA8 /* PaintViewController.swift in Sources */,
+				6A5F36B61A8C2BEA0034CBA8 /* BaseController.swift in Sources */,
 				6A5F36B41A8C2A380034CBA8 /* PaintView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

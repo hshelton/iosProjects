@@ -14,7 +14,7 @@ import Foundation
 class Drawing
 {
     /* internals section */
-    private var _lineArray : [Polyline] = []
+    var _lineArray : [Polyline] = []
     
     struct PointF
     {
@@ -50,6 +50,53 @@ class Drawing
         _lineArray.append(polyline)
     }
     
+    
+    func getNewModelAsPercentageofSelf(percentage: Float) -> Drawing
+    {
+        var temp: Drawing = Drawing()
+        
+        var pointCount: Int = 0
+        for polyLine in _lineArray
+        {
+          pointCount+=polyLine.points.count
+        }
+        
+        var desiredCount: Int = Int(Float(pointCount) * percentage)
+        
+        var newCount:Int = 0
+        
+      
+            for polyLine in _lineArray
+            {
+                //add the whole polyline
+                if (newCount + polyLine.points.count <= desiredCount)
+                {
+                    temp.appendPolyline(polyLine)
+                    newCount+=polyLine.points.count
+                }
+                else
+                {
+                    var toAdd: Polyline = Polyline(points: [], color: polyLine.color)
+                    //add in the points
+                
+                     for(var pointIndex: Int = 0; pointIndex < polyLine.points.count; pointIndex++)
+                     {
+                        //stop adding when we have enough
+                        if(newCount == desiredCount)
+                        {
+                            break
+                        }
+                        toAdd.points.append(polyLine.points[pointIndex])
+                        newCount++
+                        
+                    }
+                    temp.appendPolyline(toAdd)
+                    break //jump out of outer loop
+                }
+            }
+        
+        return temp
+    }
     /*
     * Save drawing to file using plist format
     *

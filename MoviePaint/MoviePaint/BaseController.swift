@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaintViewController: UIViewController, colorUpdate, ModelUpdater {
+class PaintViewController: UIViewController, colorUpdate, ModelUpdater, DrawingResponder {
     
     //gives outside classes ability to mess with the paint view
     var paintView: PaintView {return view as PaintView}
@@ -26,7 +26,7 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater {
         var watchButton: UIBarButtonItem = UIBarButtonItem(title: "Watch", style:UIBarButtonItemStyle.Plain, target: self, action: "pushWatchView")
         chooser.getUpdate = self
         underlyingView.delegate = self
-        
+        underlyingView.strokeColor = UIColor.blackColor().CGColor
         self.navigationItem.leftBarButtonItem = colorButton
         self.navigationItem.rightBarButtonItem = watchButton
         
@@ -41,6 +41,7 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater {
     
     func pushWatchView()
     {
+        watch.delegate = self
         self.navigationController?.pushViewController(watch, animated: true)
         
     }
@@ -54,18 +55,18 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater {
     //update the model to reflect the view
     func receiveLine(linepoints: [CGPoint], color: CGColor)
     {
-    
-        
+        var scrnWidth: Float = Float(UIScreen.mainScreen().bounds.width)
+        var scrnHeight: Float = Float( UIScreen.mainScreen().bounds.height)
+      
         var tempPointFArray: [Drawing.PointF] = []
         for current in linepoints
         {
             //convert linepoint to pointF
-            var tempPointF: Drawing.PointF = Drawing.PointF(x: Float(current.x), y: Float(current.y))
+            var tempPointF: Drawing.PointF = Drawing.PointF(x: Float(Float(current.x)/scrnWidth), y: Float(Float(current.y)/scrnHeight))
             tempPointFArray.append(tempPointF)
         }
         
         //grab rgb from color
-        
         let components: UnsafePointer<CGFloat> = CGColorGetComponents(color)
         
         //build Drawing.Color from rgb
@@ -87,6 +88,18 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater {
         self.navigationController?.navigationBar.backgroundColor = colorSelected
     }
     
+    func reqestAllPoints() -> Drawing {
+        return model
+    }
+    
+    func requestSomePoints(percentage: Float) -> Drawing
+    {
+        return model.getNewModelAsPercentageofSelf(percentage)
+    }
+    func timerChanged(delta: NSTimeInterval)
+    {
+        
+    }
     
 }
 

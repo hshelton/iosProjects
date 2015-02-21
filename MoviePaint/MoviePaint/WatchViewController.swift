@@ -10,14 +10,15 @@ import UIKit
 
 
 
-class WatchViewController: UIViewController{
+class WatchViewController: UIViewController, DrawingResponder{
 
-
+    weak var delegate: DrawingResponder?
+    var toLoad : WatchBaseView = WatchBaseView()
     override func loadView()
     {
-        var toLoad : WatchBaseView = WatchBaseView()
+        
         toLoad.backgroundColor = UIColor.whiteColor()
-        //toLoad.delegate = self
+        toLoad.delegate = self
         view = toLoad
     }
     
@@ -36,6 +37,18 @@ class WatchViewController: UIViewController{
         //trigger a redraw
     }
     
+    func reqestAllPoints() -> Drawing {
+        var model: Drawing = delegate!.reqestAllPoints()
+        return model
+    }
     
+    func requestSomePoints(percentage: Float) -> Drawing
+    {
+        var model: Drawing = delegate!.requestSomePoints(percentage)
+        return model
+    }
     
+    func timerChanged(delta: NSTimeInterval) {
+
+    }
 }
