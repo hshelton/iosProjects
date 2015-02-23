@@ -32,7 +32,7 @@ class WatchBaseView: UIView {
     private var _playPercent: Float = 1
     private var _intervalsElapsed: Int = 0
     private var _padView: UIView! = nil
-    
+    private var _paused: Bool = false
     weak var delegate: DrawingResponder?
     override init(frame: CGRect)
     {
@@ -45,9 +45,10 @@ class WatchBaseView: UIView {
         
         
         _scrubber = UISlider(frame: frame)
-        _scrubber.maximumValue = 100
+        _scrubber.maximumValue = 1
+        _scrubber.minimumValue = 0
         addSubview(_scrubber)
-        
+        _scrubber.addTarget(self, action: "scrub", forControlEvents: UIControlEvents.ValueChanged)
         
         _play = UIButton()
         _play.backgroundColor = UIColor.greenColor()
@@ -60,6 +61,7 @@ class WatchBaseView: UIView {
        _pause = UIButton()
         _pause.backgroundColor = UIColor.lightGrayColor()
         _pause.setTitle("Pause", forState: UIControlState.Normal)
+        _pause.addTarget(self, action:"pause", forControlEvents: UIControlEvents.TouchDown)
         addSubview(_pause)
 
         
@@ -75,6 +77,21 @@ class WatchBaseView: UIView {
     func initializeTimer()
     {
          _intervalsElapsed = 0
+        if(_timer != nil)
+        {
+            _timer.invalidate()
+        }
+        if(_paused)
+        {
+            _paused = false
+        }
+        
+        if(_play.titleLabel?.text == "Play")
+        {
+            _play.setTitle("Restart", forState: UIControlState.Normal)
+        }
+        
+        
         _timer = NSTimer(timeInterval: 0.1, target: self, selector:"timerFunc", userInfo: nil, repeats: true)
         NSRunLoop.currentRunLoop().addTimer(_timer, forMode: NSRunLoopCommonModes)
        
@@ -83,18 +100,41 @@ class WatchBaseView: UIView {
     
     func timerFunc ()
     {
+        if(_paused)
+        {
+            _pause.setTitle("Continue", forState: UIControlState.Normal)
+            return
+        }
+        else
+        {
+            _pause.setTitle("Pause", forState: UIControlState.Normal)
+        }
        _intervalsElapsed++
         let amt: Float = Float(Float(_intervalsElapsed)/100)
         
-        if(amt >= 100)
+    
+        if(amt <= 1)
         {
-            _timer.invalidate()
-        
+        _scrubber.value = amt
+        _scrubber.sendActionsForControlEvents(UIControlEvents.ValueChanged)
         }
         
+    }
+    
+    func scrub()
+    {
+        var amt = _scrubber.value
         var drawing: Drawing = delegate!.requestSomePoints(amt)
         drawFromModel(drawing)
-        
+    }
+    //toggle paused property
+    func pause()
+    {
+        _paused = !_paused
+        if(_paused && _intervalsElapsed >= 100)
+        {
+            _intervalsElapsed = 0
+        }
     }
     
    /* func drawAll()

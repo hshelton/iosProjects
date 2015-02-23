@@ -10,11 +10,11 @@ import UIKit
 
 protocol colorDelegate: class
 {
-    func chooserSubviewManager(SubviewManagerInstance: ChooserSubviewManager, colorSelected: UIColor)
+    func chooserBaseView(SubviewManagerInstance: ChooserBaseView, colorSelected: UIColor)
 }
 
 
-class ChooserSubviewManager : UIView, ValueSliderDelegate
+class ChooserBaseView : UIView, ValueSliderDelegate
 {
     private var _redSlider : ValueSlider! = nil
     private var _blueSlider : ValueSlider! = nil
@@ -73,7 +73,7 @@ class ChooserSubviewManager : UIView, ValueSliderDelegate
         _alphaSlider.backgroundColor = bg
         _alphaSlider.thumbColor = UIColor.blackColor().CGColor
          _alphaSlider.delegate = self
-       
+    
         addSubview(_alphaSlider)
        
         
@@ -84,9 +84,9 @@ class ChooserSubviewManager : UIView, ValueSliderDelegate
         _padView = UIView(frame: frame)
         _padView.backgroundColor = UIColor.whiteColor()
         addSubview(_padView)
-       // _alphaSlider.moveToMax()
+      
           _UIRGBCOLOR = UIColor(red: _redValue, green:  _greenValue, blue: _blueValue, alpha: _alphaValue)
-       // _currentView.backgroundColor = _UIRGBCOLOR
+       
 
         _currentView = UIView(frame: _restrictedView.frame)
         _restrictedView.addSubview(_currentView)
@@ -144,12 +144,12 @@ class ChooserSubviewManager : UIView, ValueSliderDelegate
     
     _UIRGBCOLOR = UIColor(red: _redValue, green:  _greenValue, blue: _blueValue, alpha: _alphaValue)
    
-    _currentView.backgroundColor = _UIRGBCOLOR
+    _currentView!.backgroundColor = _UIRGBCOLOR
     
     addSubview(_currentView)
     
     //update those who are interested that we've chosen a new color
-    delegate?.chooserSubviewManager(self, colorSelected: _UIRGBCOLOR)
+    delegate?.chooserBaseView(self, colorSelected: _UIRGBCOLOR)
   //  setNeedsDisplay()
     
     }

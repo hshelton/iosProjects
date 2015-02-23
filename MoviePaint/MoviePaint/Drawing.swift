@@ -47,7 +47,18 @@ class Drawing
     
     func appendPolyline(polyline: Polyline)
     {
+        //this is simply to fix a bug where the first colored polyline has rgba value of 0,1,0,0 will remove this later
+        if(polyline.color.a == 0 && polyline.color.g == 1 && polyline.color.b == 0 && polyline.color.r == 0)
+        {
+            var black:Color = Color(r: 0.0, g: 0.0, b:0.0, a:1.0)
+            var temp: Polyline = Polyline(points: polyline.points, color: black)
+            _lineArray.append(temp)
+            
+        }
+        else
+        {
         _lineArray.append(polyline)
+        }
     }
     
     

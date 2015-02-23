@@ -17,12 +17,12 @@ protocol colorUpdate:class
 class ColorChooserController: UIViewController, colorDelegate {
     
     //gives outside classes ability to mess with the color chooser view
-    var colorChooserView: ChooserSubviewManager {return view as ChooserSubviewManager}
+    var colorChooserView: ChooserBaseView{return view as ChooserBaseView}
     var colorChosen: UIColor = UIColor.blackColor()
     
     override func loadView()
     {
-        var toLoad : ChooserSubviewManager = ChooserSubviewManager()
+        var toLoad : ChooserBaseView = ChooserBaseView()
         toLoad.delegate = self
         view = toLoad
         
@@ -35,7 +35,7 @@ class ColorChooserController: UIViewController, colorDelegate {
 
     }
     
-    func chooserSubviewManager(SubviewManagerInstance: ChooserSubviewManager, colorSelected: UIColor)
+    func chooserBaseView(BaseViewInstance: ChooserBaseView, colorSelected: UIColor)
     {
         colorChosen = colorSelected
         

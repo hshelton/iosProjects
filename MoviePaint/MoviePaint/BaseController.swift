@@ -30,6 +30,8 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater, DrawingR
         self.navigationItem.leftBarButtonItem = colorButton
         self.navigationItem.rightBarButtonItem = watchButton
         
+      
+        
     }
     
     func pushChooseView ()
@@ -71,8 +73,7 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater, DrawingR
         
         //build Drawing.Color from rgb
         var tempColor: Drawing.Color = Drawing.Color(r: Float(components[0]), g: Float(components[1]), b: Float(components[2]), a: Float(components[3]))
-        
-        
+            
         model.appendPolyline(Drawing.Polyline(points: tempPointFArray, color: tempColor))
 
 
@@ -81,10 +82,9 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater, DrawingR
     
     func getUpdate(instance: ColorChooserController, colorSelected: UIColor)
     {
-        //TO DO: Set a display color box equal to chosen color
-        //set paintview's color to color chosen
+        
         underlyingView.strokeColor = colorSelected.CGColor
-    
+        //navigation bar background color reflects color chosen
         self.navigationController?.navigationBar.backgroundColor = colorSelected
     }
     

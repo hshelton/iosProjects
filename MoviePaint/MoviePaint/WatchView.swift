@@ -66,12 +66,13 @@ class WatchView: UIView {
         
         CGContextSetLineCap(context, CGLineCap(1))
         
+
         for coloredPolyline in _model!._lineArray
         {
             var currentColor: CGColor = UIColor(red: CGFloat(coloredPolyline.color.r), green: CGFloat(coloredPolyline.color.g), blue: CGFloat(coloredPolyline.color.b), alpha: CGFloat(coloredPolyline.color.a)).CGColor
-            
+          
             CGContextSetStrokeColorWithColor(context, currentColor)
-            
+          
             
             for(var pointIndex: Int = 0; pointIndex < coloredPolyline.points.count; pointIndex++)
             {

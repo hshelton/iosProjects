@@ -68,15 +68,13 @@ class PaintView : UIView
 
         let toAdd: coloredPointArray = coloredPointArray(pointArray: _points, color: self.strokeColor)
         
+        //main controller will receive the poly line and append it to the model
         delegate?.receiveLine(_points, color: self.strokeColor)
         
         _polylines.append(toAdd)
         setNeedsDisplay()
         _points = [] //clear out points
-        
-        
-        
-        //TODO: call delegate method with polyline that was just completed
+
     }
     
     
