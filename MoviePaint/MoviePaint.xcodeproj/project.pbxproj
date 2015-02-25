@@ -17,10 +17,10 @@
 		6AE509251A97E91D00215C45 /* WatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE509241A97E91D00215C45 /* WatchView.swift */; };
 		6AE509271A97EF4600215C45 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6AE509261A97EF4600215C45 /* Default-568h@2x.png */; };
 		6AE509291A97F65F00215C45 /* WatchBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE509281A97F65F00215C45 /* WatchBaseView.swift */; };
+		BC0217FF1A9D50E900D148A0 /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = BC0217FE1A9D50E900D148A0 /* checkerboard.png */; };
 		BCDA85061A92702D0022FB5D /* ChooserBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDA85041A92702D0022FB5D /* ChooserBaseView.swift */; };
 		BCDA85071A92702D0022FB5D /* ValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDA85051A92702D0022FB5D /* ValueSlider.swift */; };
 		BCDA850D1A9276670022FB5D /* ColorChooserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDA850C1A9276670022FB5D /* ColorChooserController.swift */; };
-		BCDA85161A927BE70022FB5D /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = BCDA85181A927BE70022FB5D /* checkerboard.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,10 +48,10 @@
 		6AE509241A97E91D00215C45 /* WatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
 		6AE509261A97EF4600215C45 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6AE509281A97F65F00215C45 /* WatchBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchBaseView.swift; sourceTree = "<group>"; };
+		BC0217FE1A9D50E900D148A0 /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkerboard.png; path = MoviePaint/checkerboard.png; sourceTree = "<group>"; };
 		BCDA85041A92702D0022FB5D /* ChooserBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooserBaseView.swift; sourceTree = "<group>"; };
 		BCDA85051A92702D0022FB5D /* ValueSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSlider.swift; sourceTree = "<group>"; };
 		BCDA850C1A9276670022FB5D /* ColorChooserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorChooserController.swift; sourceTree = "<group>"; };
-		BCDA85171A927BE70022FB5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = Base.lproj/checkerboard.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				6AE509261A97EF4600215C45 /* Default-568h@2x.png */,
+				BC0217FE1A9D50E900D148A0 /* checkerboard.png */,
 				6A5F36901A8C29CE0034CBA8 /* MoviePaint */,
 				6A5F36A61A8C29CF0034CBA8 /* MoviePaintTests */,
 				6A5F368F1A8C29CE0034CBA8 /* Products */,
@@ -171,7 +172,6 @@
 		BCDA850E1A9278710022FB5D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				BCDA85181A927BE70022FB5D /* checkerboard.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -256,9 +256,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCDA85161A927BE70022FB5D /* checkerboard.png in Resources */,
 				6A5F369B1A8C29CF0034CBA8 /* Images.xcassets in Resources */,
 				6AE509271A97EF4600215C45 /* Default-568h@2x.png in Resources */,
+				BC0217FF1A9D50E900D148A0 /* checkerboard.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,17 +306,6 @@
 			targetProxy = 6A5F36A41A8C29CF0034CBA8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		BCDA85181A927BE70022FB5D /* checkerboard.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BCDA85171A927BE70022FB5D /* Base */,
-			);
-			name = checkerboard.png;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		6A5F36AB1A8C29CF0034CBA8 /* Debug */ = {

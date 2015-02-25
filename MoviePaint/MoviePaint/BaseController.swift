@@ -30,7 +30,7 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater, DrawingR
         self.navigationItem.leftBarButtonItem = colorButton
         self.navigationItem.rightBarButtonItem = watchButton
         
-      
+       
         
     }
     
@@ -85,9 +85,13 @@ class PaintViewController: UIViewController, colorUpdate, ModelUpdater, DrawingR
         
         underlyingView.strokeColor = colorSelected.CGColor
         //navigation bar background color reflects color chosen
+     
         self.navigationController?.navigationBar.backgroundColor = colorSelected
+        
+        
     }
     
+   
     func reqestAllPoints() -> Drawing {
         return model
     }
