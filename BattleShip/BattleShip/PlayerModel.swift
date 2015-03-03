@@ -8,4 +8,14 @@
 
 import Foundation
 
-
+class Player
+{
+    var name: String
+    var gameSaves: [String] = []
+    
+    init()
+    {
+        name = "Player"
+    }
+    
+}

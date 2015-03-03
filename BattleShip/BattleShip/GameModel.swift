@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+class Game {
+    
+    var Player1: Player = Player()
+    var Player2: Player = Player()
+    var Player1Fleet: Fleet = Fleet()
+    var Player2Fleet: Fleet = Fleet()
+    init()
+    {
+        
+    }
+}

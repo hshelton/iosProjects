@@ -15,7 +15,6 @@ class GameGrid
     private var _grid: [String] = []
     
     
-    
     init()
     {
        //the grid is initially a bunch of empty squares
@@ -35,6 +34,16 @@ class GameGrid
         }
         return _grid[res * col]
     }
+    
+    func GetContentsOfGridCellWithIntRow(row: Int, col: Int) -> String
+    {
+     
+        if(row < 0 || row > 9 || col < 0 || col > 9)
+        {
+            return "error"
+        }
+        return _grid[row * col]
+    }
 
     func SetContentsOfGridCell(row:Character, col: Int, contents:String) -> Bool
     {
@@ -47,8 +56,19 @@ class GameGrid
         return false
     }
     
+    func SetContentsOfGridCellWithIntRow(row:Int, col: Int, contents:String) -> Bool
+    {
+        
+        if( row < 0 || row > 9 || col < 0 || col > 9 || _grid[row * col] != "e")
+        {
+            return false
+        }
+        _grid[row * col] = contents
+        return false
+    }
     
-    private func getIntValue(c: Character) ->Int
+    
+    func getIntValue(c: Character) ->Int
     {
         let s = String(c).lowercaseString.unicodeScalars
         let uniVal = Int(s[s.startIndex].value)

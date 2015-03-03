@@ -9,15 +9,15 @@
 /* Begin PBXBuildFile section */
 		BC217BDC1AA1557600724C8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217BDB1AA1557600724C8C /* AppDelegate.swift */; };
 		BC217BDE1AA1557600724C8C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217BDD1AA1557600724C8C /* ViewController.swift */; };
-		BC217BE11AA1557600724C8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC217BDF1AA1557600724C8C /* Main.storyboard */; };
 		BC217BE31AA1557600724C8C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC217BE21AA1557600724C8C /* Images.xcassets */; };
-		BC217BE61AA1557600724C8C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC217BE41AA1557600724C8C /* LaunchScreen.xib */; };
 		BC217BF21AA1557600724C8C /* BattleShipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217BF11AA1557600724C8C /* BattleShipTests.swift */; };
 		BC217BFC1AA1567E00724C8C /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217BFB1AA1567E00724C8C /* GameModel.swift */; };
 		BC217BFF1AA156B000724C8C /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217BFE1AA156B000724C8C /* PlayerModel.swift */; };
 		BC217C011AA1570900724C8C /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C001AA1570900724C8C /* GameGrid.swift */; };
 		BC217C031AA162BF00724C8C /* ShipGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C021AA162BF00724C8C /* ShipGrid.swift */; };
 		BC217C051AA1636200724C8C /* Fleet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C041AA1636200724C8C /* Fleet.swift */; };
+		BC4C3C011AA571D300BCD8C8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */; };
+		BCCD21031AA2589B0062EE24 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD21021AA2589B0062EE24 /* GridView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,9 +35,7 @@
 		BC217BDA1AA1557600724C8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC217BDB1AA1557600724C8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC217BDD1AA1557600724C8C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BC217BE01AA1557600724C8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BC217BE21AA1557600724C8C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		BC217BE51AA1557600724C8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		BC217BEB1AA1557600724C8C /* BattleShipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BattleShipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC217BF01AA1557600724C8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC217BF11AA1557600724C8C /* BattleShipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleShipTests.swift; sourceTree = "<group>"; };
@@ -46,6 +44,8 @@
 		BC217C001AA1570900724C8C /* GameGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
 		BC217C021AA162BF00724C8C /* ShipGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipGrid.swift; sourceTree = "<group>"; };
 		BC217C041AA1636200724C8C /* Fleet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fleet.swift; sourceTree = "<group>"; };
+		BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		BCCD21021AA2589B0062EE24 /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +69,7 @@
 		BC217BCD1AA1557500724C8C = {
 			isa = PBXGroup;
 			children = (
+				BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */,
 				BC217BD81AA1557600724C8C /* BattleShip */,
 				BC217BEE1AA1557600724C8C /* BattleShipTests */,
 				BC217BD71AA1557600724C8C /* Products */,
@@ -87,12 +88,11 @@
 		BC217BD81AA1557600724C8C /* BattleShip */ = {
 			isa = PBXGroup;
 			children = (
+				BCCD21011AA258570062EE24 /* Views */,
 				BC217BFD1AA1569800724C8C /* Models */,
 				BC217BDB1AA1557600724C8C /* AppDelegate.swift */,
 				BC217BDD1AA1557600724C8C /* ViewController.swift */,
-				BC217BDF1AA1557600724C8C /* Main.storyboard */,
 				BC217BE21AA1557600724C8C /* Images.xcassets */,
-				BC217BE41AA1557600724C8C /* LaunchScreen.xib */,
 				BC217BD91AA1557600724C8C /* Supporting Files */,
 			);
 			path = BattleShip;
@@ -133,6 +133,14 @@
 				BC217C041AA1636200724C8C /* Fleet.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		BCCD21011AA258570062EE24 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BCCD21021AA2589B0062EE24 /* GridView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,9 +223,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC217BE11AA1557600724C8C /* Main.storyboard in Resources */,
-				BC217BE61AA1557600724C8C /* LaunchScreen.xib in Resources */,
 				BC217BE31AA1557600724C8C /* Images.xcassets in Resources */,
+				BC4C3C011AA571D300BCD8C8 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +244,7 @@
 			files = (
 				BC217BDE1AA1557600724C8C /* ViewController.swift in Sources */,
 				BC217BDC1AA1557600724C8C /* AppDelegate.swift in Sources */,
+				BCCD21031AA2589B0062EE24 /* GridView.swift in Sources */,
 				BC217C011AA1570900724C8C /* GameGrid.swift in Sources */,
 				BC217BFF1AA156B000724C8C /* PlayerModel.swift in Sources */,
 				BC217BFC1AA1567E00724C8C /* GameModel.swift in Sources */,
@@ -262,25 +270,6 @@
 			targetProxy = BC217BEC1AA1557600724C8C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		BC217BDF1AA1557600724C8C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BC217BE01AA1557600724C8C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		BC217BE41AA1557600724C8C /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BC217BE51AA1557600724C8C /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BC217BF31AA1557600724C8C /* Debug */ = {
