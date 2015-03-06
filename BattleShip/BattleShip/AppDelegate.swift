@@ -17,24 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        var testGrid: GameGrid = GameGrid()
-        
-        testGrid.GetContentsOfGridCell(Character("b"), col: 10)
-       
-        
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window?.backgroundColor = UIColor.whiteColor()
+
+        window?.rootViewController = UINavigationController(rootViewController: ApplicationViewController())
+    
         window?.makeKeyAndVisible()
-        
-        var grid: GridView = GridView(frame: window!.frame)
-        grid.backgroundColor = UIColor.whiteColor()
-        window?.addSubview(grid)
-        
         
         return true
     }
 
-
+ 
 
 }
 
