@@ -23,13 +23,14 @@ class ShipGrid: GameGrid
             var currentCell: Int = col
             
             //get list of cols that we want to place in
-            while(currentCell < t._size)
+            while(cols.count < t._size)
             {
                 cols.append(currentCell)
                 currentCell++
             }
             //make sure they exist and are empty
             for c in cols{
+            
                 if(GetContentsOfGridCell(row, col: c) != "e") {return false}
             }
             //set the cells
@@ -45,13 +46,14 @@ class ShipGrid: GameGrid
             var currentCell: Int = getIntValue(row)
             
             //get list of rows that we want to place in
-            while(currentCell < t._size)
+            while(rows.count < t._size)
             {
                 rows.append(currentCell)
                 currentCell++
             }
             //make sure they exist and are empty
             for r in rows{
+            
                 if(GetContentsOfGridCellWithIntRow(r, col: col) != "e") {return false}
             }
             //set the cells
@@ -61,7 +63,7 @@ class ShipGrid: GameGrid
 
         }
         
-        return false
+        return true
     }
     
     

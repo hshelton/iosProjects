@@ -13,6 +13,7 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder {
     var underlyingView: SplashView?
     var _gameController: GameViewController = GameViewController()
     var _listController: GamesListViewController = GamesListViewController()
+    var _placementController: ShipPlacementController = ShipPlacementController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +25,9 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder {
         underlyingView = SplashView()
         underlyingView?.delegate = self
         view = underlyingView
-        
-       
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        title = "Start"
     }
     
     func AppStateChanged(reason: String) {
@@ -33,9 +35,11 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder {
         switch(reason)
         {
         case "new":
-            self.navigationController?.pushViewController(_gameController, animated: true)
+            self.navigationController?.pushViewController(_placementController, animated: true)
+        
         case "list":
             self.navigationController?.pushViewController(_listController, animated: true)
+          
         default:
             return
             

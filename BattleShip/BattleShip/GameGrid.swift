@@ -32,7 +32,9 @@ class GameGrid
         {
             return "error"
         }
-        return _grid[res * col]
+     //   printGridForDebug()
+        var cellInQuestion = res * 10 + col 
+        return _grid[res * 10 + col ]
     }
     
     func GetContentsOfGridCellWithIntRow(row: Int, col: Int) -> String
@@ -42,7 +44,9 @@ class GameGrid
         {
             return "error"
         }
-        return _grid[row * col]
+     //
+        //bug fix, now returns correct position
+        return _grid[row * 10 + col ]
     }
 
     func SetContentsOfGridCell(row:Character, col: Int, contents:String) -> Bool
@@ -52,8 +56,10 @@ class GameGrid
         {
             return false
         }
-        _grid[res * col] = contents
-        return false
+        _grid[res * 10 + col ] = contents
+     
+     printGridForDebug()
+        return true
     }
     
     func SetContentsOfGridCellWithIntRow(row:Int, col: Int, contents:String) -> Bool
@@ -63,8 +69,10 @@ class GameGrid
         {
             return false
         }
-        _grid[row * col] = contents
-        return false
+        _grid[row * 10 + col ] = contents
+        
+   printGridForDebug()
+        return true
     }
     
     
@@ -83,6 +91,21 @@ class GameGrid
         
     }
     
-    
+    func printGridForDebug()
+    {
+        println("BEG------GRID-------")
+        var current: Int = 0
+        for(var i: Int = 0; i < 10; i++)
+        {
+            for(var j: Int = 0; j < 10; j++)
+            {
+                print(_grid[10 * current + j])
+                
+            }
+            println()
+            current++
+        }
+        println("END------GRID-------")
+    }
     
 }

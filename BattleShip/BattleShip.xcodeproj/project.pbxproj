@@ -17,6 +17,7 @@
 		BC217C031AA162BF00724C8C /* ShipGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C021AA162BF00724C8C /* ShipGrid.swift */; };
 		BC217C051AA1636200724C8C /* Fleet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C041AA1636200724C8C /* Fleet.swift */; };
 		BC4C3C011AA571D300BCD8C8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */; };
+		BC5578D71AAB6A0C0019C3E3 /* ShipPlacementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5578D61AAB6A0C0019C3E3 /* ShipPlacementController.swift */; };
 		BC72494B1AA9492E00EA8EBF /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC72494A1AA9492E00EA8EBF /* SplashView.swift */; };
 		BCCBCF161AA9532F00782C5D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCBCF151AA9532F00782C5D /* GameViewController.swift */; };
 		BCCBCF181AA9536100782C5D /* GamesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCBCF171AA9536100782C5D /* GamesListViewController.swift */; };
@@ -48,6 +49,7 @@
 		BC217C021AA162BF00724C8C /* ShipGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipGrid.swift; sourceTree = "<group>"; };
 		BC217C041AA1636200724C8C /* Fleet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fleet.swift; sourceTree = "<group>"; };
 		BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		BC5578D61AAB6A0C0019C3E3 /* ShipPlacementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipPlacementController.swift; sourceTree = "<group>"; };
 		BC72494A1AA9492E00EA8EBF /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		BCCBCF151AA9532F00782C5D /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		BCCBCF171AA9536100782C5D /* GamesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesListViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				BC217BDD1AA1557600724C8C /* ApplicationViewController.swift */,
 				BCCBCF151AA9532F00782C5D /* GameViewController.swift */,
 				BCCBCF171AA9536100782C5D /* GamesListViewController.swift */,
+				BC5578D61AAB6A0C0019C3E3 /* ShipPlacementController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				BCCBCF181AA9536100782C5D /* GamesListViewController.swift in Sources */,
 				BC217BFC1AA1567E00724C8C /* GameModel.swift in Sources */,
 				BC217C031AA162BF00724C8C /* ShipGrid.swift in Sources */,
+				BC5578D71AAB6A0C0019C3E3 /* ShipPlacementController.swift in Sources */,
 				BC217C051AA1636200724C8C /* Fleet.swift in Sources */,
 				BC72494B1AA9492E00EA8EBF /* SplashView.swift in Sources */,
 			);

@@ -23,6 +23,12 @@ class GridView: UIView
     var _row: Character = "z"
     var _column: Int = -1
     
+    //the rectangles that make up validly placed ships
+    
+    
+    var rectsToDraw: [CGRect] = []
+    
+    
     override init(frame: CGRect)
     {
         super.init(frame: frame)
@@ -37,9 +43,44 @@ class GridView: UIView
         super.init()
     }
     
+    //called by parent view controller add a few more rectangles to the left or below the last drawn
+    func updateRectsToDraw(addXMore: Int, horizontal: Bool)
+    {
+        let width: CGFloat = bounds.width
+        let height: CGFloat = bounds.height
+        
+        let xInterval: CGFloat = width / 10
+        let yInterval: CGFloat = height / 10
+        
+        rectsToDraw.append(rectToDraw)
+        
+        if(horizontal)
+        {
+            for (var i: Int = 0; i < addXMore; i++)
+            {
+                let xOffset: CGFloat = rectToDraw.origin.x + (CGFloat(i) * xInterval)
+                
+                let current: CGRect = CGRect(x: xOffset, y: rectToDraw.origin.y, width: xInterval, height: yInterval)
+                rectsToDraw.append(current)
+            }
+        }
+        else
+        {
+        
+            for (var i: Int = 0; i < addXMore; i++)
+            {
+                let yOffset: CGFloat = rectToDraw.origin.y + (CGFloat(i) * yInterval)
+                let current: CGRect = CGRect(x: rectToDraw.origin.x, y: yOffset, width: xInterval, height: yInterval)
+                rectsToDraw.append(current)
+            }
+        }
+        setNeedsDisplay()
+    }
+    
     //capture touch points in order to draw a rectangle that is colored and is located in the grid location they touched
   override func touchesEnded(touches: NSSet, withEvent event: UIEvent)
   {
+    
     let touch : UITouch = touches.anyObject() as UITouch
     let touchPoint : CGPoint = touch.locationInView(self)
     
@@ -53,20 +94,32 @@ class GridView: UIView
     let yRounded: CGFloat = touchPoint.y - (touchPoint.y % yInterval)
     
     let chosen: CGRect = CGRect(x: xRounded, y: yRounded, width: xInterval, height: yInterval)
-    updateSelected(xRounded, Y:yRounded, XInterval: xInterval, YInterval: yInterval)
     
+
+     setNeedsDisplay()
     rectToDraw = chosen
+    updateSelected(xRounded, Y:yRounded, XInterval: xInterval, YInterval: yInterval)
     redrawSelected = true
-    setNeedsDisplay()
     }
     
-    
+     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        redrawSelected = false
+        
+        setNeedsDisplay()
+    }
+
    override func drawRect(rect: CGRect) {
   
     let context: CGContext = UIGraphicsGetCurrentContext()
     let width: CGFloat = bounds.width
     let height: CGFloat = bounds.height
-
+    
+    let all: CGRect = CGRect(x: 0.0, y:0.0, width: width, height: height)
+    
+    CGContextAddRect(context, all)
+    CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor)
+    
+    CGContextDrawPath(context, kCGPathFill)
     let interval: CGFloat = width / 10
     
     CGContextSetStrokeColorWithColor(context, UIColor.grayColor().CGColor)
@@ -97,42 +150,58 @@ class GridView: UIView
         
         CGContextMoveToPoint(context, 0.0, yPos + interval2)
     }
+    // draw the current selected
     if(redrawSelected)
     {
         CGContextAddRect(context, rectToDraw)
-        CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor)
+        CGContextSetFillColorWithColor(context, UIColor.grayColor().CGColor)
         CGContextDrawPath(context, kCGPathFill)
         redrawSelected = false
-    }
-    
-    setNeedsDisplay()
     
     }
+    // draw all the saved rectangles
+    for r in rectsToDraw
+    {
+        CGContextAddRect(context, r)
+        CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor)
+        CGContextDrawPath(context, kCGPathFill)
+    }
     
-    //set row = to character representing row selected and column = to int representing column selected
+    }
+    
+    //tells those interested the new row and column
     func updateSelected(X: CGFloat, Y: CGFloat, XInterval:CGFloat, YInterval:CGFloat)
     {
        // _column = Int( CGFloat(X) / XInterval )
       //  var tempRow: Int = Int( CGFloat(Y) / YInterval )
-        var cI: CGFloat = 0.0
+       /* var columnIndex: CGFloat = XInterval
         var tempCol: Int = 0
         
-        while(cI < X)
+    
+        
+        
+        while(columnIndex < X)
         {
-            cI+=XInterval
+            columnIndex+=XInterval
             tempCol++
         }
         
-        var rI: CGFloat = 0.0
+        var rowIndex: CGFloat = 0.0
         var tempRow: Int = 0
-        while(rI < Y)
+        
+     
+        while(rowIndex < Y )
         {
-            rI+=YInterval
+            rowIndex+=YInterval
             tempRow++
         }
         _column = tempCol
+*/
+        var rowRes = Int(Y/YInterval)
+        var colRes = Int(X/XInterval)
+        _column = colRes
         
-        switch(tempRow)
+        switch(rowRes)
         {
         case 0: _row = "a"
         case 1: _row = "b"
@@ -147,7 +216,7 @@ class GridView: UIView
         default:
             _row = "z"
         }
-        //invoke delegate
+        //invoke delegate, tell delegate to attempt to update the model
         delegate?.getRowAndColumn(_row, column: _column)
     }
     

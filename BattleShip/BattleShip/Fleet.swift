@@ -12,6 +12,7 @@ class Ship
 {
     var _size: Int = 0
     var _hp: Int = 0
+    var _type: String = "NA"
     
 }
 
@@ -22,6 +23,8 @@ class Carrier: Ship
     super.init()
    _size = 5
    _hp = 5
+   _type = "Carrier"
+   
     }
 }
 
@@ -32,6 +35,7 @@ class BattleShip: Ship
         super.init()
         _size = 4
         _hp = 4
+        _type = "Battleship"
     }
 }
 
@@ -42,6 +46,7 @@ class Submarine: Ship
         super.init()
         _size = 3
         _hp = 3
+        _type = "Submarine"
     }
 }
 
@@ -52,6 +57,7 @@ class Destroyer: Ship
         super.init()
         _size = 3
         _hp = 3
+        _type = "Destroyer"
     }
 }
 class Patrol: Ship
@@ -61,6 +67,7 @@ class Patrol: Ship
         super.init()
         _size = 2
         _hp = 2
+        _type = "Patrol"
     }
 }
 

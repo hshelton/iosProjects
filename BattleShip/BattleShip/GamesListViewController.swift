@@ -23,9 +23,11 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         //view.backgroundColor = UIColor.redColor()
         //view = UITableView()
-        title = "Game List"
+        title = "Load Game"
         tableView.dataSource = self
         tableView.delegate = self
+        
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
