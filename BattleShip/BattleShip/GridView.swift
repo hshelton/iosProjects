@@ -24,8 +24,6 @@ class GridView: UIView
     var _column: Int = -1
     
     //the rectangles that make up validly placed ships
-    
-    
     var rectsToDraw: [CGRect] = []
     
     
@@ -95,8 +93,7 @@ class GridView: UIView
     
     let chosen: CGRect = CGRect(x: xRounded, y: yRounded, width: xInterval, height: yInterval)
     
-
-     setNeedsDisplay()
+    setNeedsDisplay()
     rectToDraw = chosen
     updateSelected(xRounded, Y:yRounded, XInterval: xInterval, YInterval: yInterval)
     redrawSelected = true
@@ -116,8 +113,9 @@ class GridView: UIView
     
     let all: CGRect = CGRect(x: 0.0, y:0.0, width: width, height: height)
     
+    //done to make sure we're redrawing everything
     CGContextAddRect(context, all)
-    CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor)
+    CGContextSetFillColorWithColor(context, UIColor(red: 0, green: 0.4, blue: 0.95, alpha: 1.0).CGColor)
     
     CGContextDrawPath(context, kCGPathFill)
     let interval: CGFloat = width / 10
@@ -135,7 +133,6 @@ class GridView: UIView
         CGContextDrawPath(context, kCGPathStroke)
         
         CGContextMoveToPoint(context, xPos + interval, 0.0)
-        
     }
     
     let interval2: CGFloat = height/10
@@ -151,22 +148,32 @@ class GridView: UIView
         CGContextMoveToPoint(context, 0.0, yPos + interval2)
     }
     // draw the current selected
+    
     if(redrawSelected)
     {
         CGContextAddRect(context, rectToDraw)
-        CGContextSetFillColorWithColor(context, UIColor.grayColor().CGColor)
+        let invalidColor: UIColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.1)
+        CGContextSetFillColorWithColor(context, invalidColor.CGColor)
         CGContextDrawPath(context, kCGPathFill)
         redrawSelected = false
     
     }
     // draw all the saved rectangles
+
+    CGContextSetFillColorWithColor(context, UIColor.darkGrayColor().CGColor)
+    CGContextSetLineCap(context, CGLineCap(2))
+    
+    //first rectangle is being drawn twice, eliminate duplicate shadow
+    var tempBugFix: Int = 0
     for r in rectsToDraw
     {
-        CGContextAddRect(context, r)
-        CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor)
-        CGContextDrawPath(context, kCGPathFill)
+  
+            CGContextAddRect(context, r)
+            CGContextDrawPath(context, kCGPathFill)
+
+
     }
-    
+  
     }
     
     //tells those interested the new row and column

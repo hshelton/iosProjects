@@ -65,8 +65,6 @@ class SplashView: UIView
     
     }
     
-    
-    
     func newGamePressed()
     {
         //notify those interested that the application state has changed

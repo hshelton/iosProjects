@@ -52,26 +52,26 @@ class GameGrid
     func SetContentsOfGridCell(row:Character, col: Int, contents:String) -> Bool
     {
         let res: Int = getIntValue(row)
-        if(res == -1 || col < 0 || col > 9 || _grid[res * col] != "e")
+        if(res == -1 || col < 0 || col > 9 || _grid[res * 10 + col] != "e")
         {
             return false
         }
         _grid[res * 10 + col ] = contents
      
-     printGridForDebug()
+
         return true
     }
     
     func SetContentsOfGridCellWithIntRow(row:Int, col: Int, contents:String) -> Bool
     {
         
-        if( row < 0 || row > 9 || col < 0 || col > 9 || _grid[row * col] != "e")
+        if( row < 0 || row > 9 || col < 0 || col > 9 || _grid[row * 10 + col] != "e")
         {
             return false
         }
         _grid[row * 10 + col ] = contents
         
-   printGridForDebug()
+
         return true
     }
     
@@ -99,7 +99,7 @@ class GameGrid
         {
             for(var j: Int = 0; j < 10; j++)
             {
-                print(_grid[10 * current + j])
+                print("[" +  (_grid[10 * current + j]) + "]")
                 
             }
             println()

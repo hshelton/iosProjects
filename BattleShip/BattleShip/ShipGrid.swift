@@ -37,7 +37,7 @@ class ShipGrid: GameGrid
             for c in cols{
                 SetContentsOfGridCell(row, col: c, contents: "s")
             }
-            
+            printGridForDebug()
         }
             
         else
@@ -58,8 +58,9 @@ class ShipGrid: GameGrid
             }
             //set the cells
             for r in rows {
-                SetContentsOfGridCellWithIntRow(r, col: col, contents: "s")
+                var set = SetContentsOfGridCellWithIntRow(r, col: col, contents: "s")
             }
+            printGridForDebug()
 
         }
         

@@ -38,7 +38,7 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
     override func loadView()
     {
         
-        _shipTypeSelector.frame = CGRect(x: 0, y: 384, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height - 256)
+        _shipTypeSelector.frame = CGRect(x: 0, y: 384, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height - 360)
         
         _placementGrid.frame = CGRect(x:0, y:64, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height - _shipTypeSelector.bounds.height)
         
@@ -55,11 +55,10 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
         self.title = "Place Ships"
     }
     
+   
     func getRowAndColumn (row: Character, column: Int)
     {
-        //invoke delegate to notify pa
-        
-        //place the ship into the model
+        //try to place the ship into the model
         let valid: Bool = _shipGrid.InsertShip(sType, row: row, col: column, horizontal: horizontalInsert)
         if(valid)
         {
@@ -102,124 +101,82 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
         }
         else
         {
-            return 5
+            return _pickerData[1].count
         }
         
     }
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
     {
-        /*
-        var sel: Int = 0
-        var updateChoice: Bool = false
-        if(row != 4)
-        {
-            sel = row + 1
-        }
-        
-        switch(row)
-        {
-        case 0:
-            if(_carrierPlaced == true)
-            {
-                updateChoice = true
-            }
-        case 1:
-            if(_battleshipPlaced)
-            {
-                updateChoice = true
-                
-            }
-        case 2:
-            if(_submaringePlaced)
-            {
-                updateChoice = true
-            }
-        case 2:
-            if(_destroyerPlaced)
-            {
-                updateChoice = true
-            }
-        case 4:
-            if(_patrolPlaced)
-            {
-                updateChoice = true
-            }
-        default:
-            updateChoice = false
-        }
-        if(updateChoice)
-        {
-             _shipTypeSelector.selectRow(sel, inComponent: component, animated: true)
-        }
        
-*/
         
         return _pickerData[component][row]
     }
-    
+
     //ship placement outcome will depend on the ship type selected and its orientation
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         var chosen = _pickerData[component][row]
        
         //TODO: Each ship type should only be selectable one time
         
-       /*
-        In UIPickerView delegate method
-            
-            - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-        
-        you can check if this selection is valid and scroll to the appropriate row if it is not (using pickerview's
-        
-        - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component animated:(BOOL)animated        */
-switch chosen
+
+        switch chosen
         {
             case "Vertical":
                 horizontalInsert = false
             case "Horizontal":
                 horizontalInsert = true
             case "Carrier":
-              /*  if(_carrierPlaced)
-                {
-                    _shipTypeSelector.selectRow(1 , inComponent: component, animated: true)
-                    return
-                }
-*/
+
                 sType = Carrier()
     
             case "Battleship":
-                /*if(_battleshipPlaced)
-                {
-                    _shipTypeSelector.selectRow(row + 1 , inComponent: component, animated: true)
-                    return
-                }*/
-                
+
                 sType = BattleShip()
             case "Submarine":
-               /* if(_submaringePlaced)
-                {
-                    _shipTypeSelector.selectRow(row + 1 , inComponent: component, animated: true)
-                    return
-                } */
+
                 sType = Submarine()
             case "Destroyer":
-                /*if(_destroyerPlaced)
-                {
-                    _shipTypeSelector.selectRow(row + 1 , inComponent: component, animated: true)
-                    return
-                } */
+
                 sType = Destroyer()
             case "Patrol":
-              /*  if(_patrolPlaced)
-                {
-                    _shipTypeSelector.selectRow(0 , inComponent: component, animated: true)
-                    return
-                } */
+
                 sType = Patrol()
             
             default:
-            return
+                recalculatePickerData()
             
         }
+        recalculatePickerData()
         
+    }
+    
+    //eliminate options from the picker view as ship types are placed
+    func recalculatePickerData()
+    {
+        var newData: [String] = []
+        if(!_carrierPlaced)
+        {
+            newData.append("Carrier")
+        }
+        if(!_battleshipPlaced)
+        {
+            newData.append("Battleship")
+        }
+        if(!_destroyerPlaced)
+        {
+            newData.append("Destroyer")
+        }
+        if(!_submaringePlaced)
+        {
+            newData.append("Submarine")
+        }
+        if(!_patrolPlaced)
+        {
+            newData.append("Patrol")
+        }
+        
+        _pickerData[1] = newData
+        numberOfComponentsInPickerView(_shipTypeSelector)
+   
     }
 }
