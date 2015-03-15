@@ -19,15 +19,20 @@ class SplashView: UIView
     private var _newGame: UIButton! = nil
     private var _listGames: UIButton! = nil
     private var _artView: UIView! = nil
+    private var _texture: UIView! = nil
+    private var _titleLabel: UILabel! = nil
     weak var delegate: AppStateUpdateResponder?
     
     override init (frame: CGRect)
     {
         super.init(frame:frame)
         
+        _texture = UIView()
+        _texture.backgroundColor = UIColor(patternImage: UIImage(named:"earth.jpg")!)
+        addSubview(_texture)
         //set up ui components and add them as subviews
         _artView = UIView(frame: frame)
-        _artView.backgroundColor = UIColor(red: 0, green: 0.5, blue: 0.85, alpha: 1.0)
+        _artView.backgroundColor = UIColor(red: 0.07, green: 0.2, blue: 0.45, alpha: 0.94)
         addSubview(_artView)
         
         _newGame = UIButton()
@@ -41,6 +46,12 @@ class SplashView: UIView
         _listGames.setTitle("List Games", forState: UIControlState.Normal)
         _listGames.addTarget(self, action: "listGamesPressed", forControlEvents: UIControlEvents.TouchDown)
         addSubview(_listGames)
+        
+        _titleLabel = UILabel()
+        _titleLabel.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        _titleLabel.text = "BATTLESHIP"; _titleLabel.textAlignment = NSTextAlignment.Center
+        _titleLabel.textColor = UIColor.whiteColor(); _titleLabel.font = UIFont.boldSystemFontOfSize(40.0)
+        addSubview(_titleLabel)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -52,23 +63,36 @@ class SplashView: UIView
         super.init()
     }
     
-    
+    func renameButton(buttonText: String)
+    {
+        _newGame.setTitle(buttonText, forState: UIControlState.Normal)
+    }
    override func layoutSubviews()
    {
     var r: CGRect = bounds
+    _texture.frame = bounds
     var pad: CGRect = CGRectZero
     var container: CGRect = CGRectZero
     (pad, r) = r.rectsByDividing(64, fromEdge: CGRectEdge.MinYEdge)
     (_artView.frame, r) = r.rectsByDividing(r.height/1.2, fromEdge: CGRectEdge.MinYEdge)
    
     (_newGame.frame, _listGames.frame) = r.rectsByDividing(r.width/2, fromEdge: CGRectEdge.MinXEdge)
-    
+    _titleLabel.frame = CGRect(x: 0, y: _artView.frame.midY - 40, width: bounds.width, height: 40)
     }
     
     func newGamePressed()
     {
         //notify those interested that the application state has changed
-        delegate?.AppStateChanged("new")
+        if(_newGame.titleForState(UIControlState.Normal) == "New Game")
+        {
+                    delegate?.AppStateChanged("new")
+            
+        }
+        else
+        {
+            delegate?.AppStateChanged("newP2")
+        }
+
     }
     
     func listGamesPressed()

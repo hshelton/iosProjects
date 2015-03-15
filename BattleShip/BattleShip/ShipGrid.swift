@@ -61,11 +61,37 @@ class ShipGrid: GameGrid
                 var set = SetContentsOfGridCellWithIntRow(r, col: col, contents: "s")
             }
             printGridForDebug()
-
         }
-        
         return true
     }
+    //register a missle strike in game grid
+    // returns true if the missle was a strike
+    func intakeMissile (row: Character, column: Int) -> Bool
+    {
+        if(GetContentsOfGridCell(row, col: column) == "e")
+        {
+            SetContentsOfGridCell(row, col: column, contents: "h")
+            return true
+        }
+        else
+        {
+            SetContentsOfGridCell(row, col: column, contents: "m")
+        }
+        return false
+    }
     
+    //get count of grid cells that contain 's' for ship
+    func getHPRemaining () -> Int
+    {
+        var count = 0
+        for c in _grid
+        {
+            if(c == "s")
+            {
+                count++
+            }
+        }
+        return count
+    }
     
 }

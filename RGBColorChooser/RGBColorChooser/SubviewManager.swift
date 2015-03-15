@@ -120,7 +120,8 @@ class SubviewManager : UIView, ValueSliderDelegate
         }
     
     _UIRGBCOLOR = UIColor(red: _redValue, green:  _greenValue, blue: _blueValue, alpha: _alphaValue)
-   
+    
+    println("red: \(_redValue) green: \(_greenValue) blue: \(_blueValue) alpha: \(_alphaValue)")
     _currentView.backgroundColor = _UIRGBCOLOR
     
     addSubview(_currentView)

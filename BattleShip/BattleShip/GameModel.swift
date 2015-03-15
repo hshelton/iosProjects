@@ -14,6 +14,11 @@ class Game {
     var Player2: Player = Player()
     var Player1Fleet: Fleet = Fleet()
     var Player2Fleet: Fleet = Fleet()
+    
+    var Player1Grid: ShipGrid = ShipGrid()
+    var Player2Grid: ShipGrid = ShipGrid()
+    
+    var P1Turn: Bool = true
     init()
     {
         

@@ -224,6 +224,8 @@ class GridView: UIView
             _row = "z"
         }
         //invoke delegate, tell delegate to attempt to update the model
+        
+        
         delegate?.getRowAndColumn(_row, column: _column)
     }
     

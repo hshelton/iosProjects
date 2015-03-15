@@ -12,7 +12,7 @@ import Foundation
 class GameGrid
 {
     
-    private var _grid: [String] = []
+     var _grid: [String] = []
     
     
     init()

@@ -11,11 +11,11 @@ import UIKit
 //View controller used to control ship placement for player 1 and player 2
 class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, GridViewRegistrant
 {
-    private var _placementGrid: GridView = GridView()
+    var _placementGrid: GridView = GridView()
     private var _shipTypeSelector: UIPickerView = UIPickerView()
     private var _underlyingView: UIView = UIView()
     private var _pickerData = [["Vertical", "Horizontal"],["Carrier", "Battleship", "Submarine", "Destroyer", "Patrol"]]
-    
+
     //logic to make sure that each ship is only placed once
     private var _carrierPlaced: Bool = false
     private var _battleshipPlaced: Bool = false
@@ -24,9 +24,11 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
     private var _patrolPlaced: Bool = false
     
     
-    private var _shipGrid: ShipGrid = ShipGrid() //keeps track of the ships that have been placed. later will be passed to the main controller
+    var _shipGrid: ShipGrid = ShipGrid() //keeps track of the ships that have been placed. later will be passed to the main controller
     private var sType: Ship = Carrier()
     private var horizontalInsert: Bool = false
+    
+    weak var delegate: AppStateUpdateResponder?
     
     override func viewDidLoad()
     {
@@ -44,13 +46,14 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
         
         _shipTypeSelector.dataSource = self
         _shipTypeSelector.delegate = self
-        _underlyingView.backgroundColor = UIColor.whiteColor()
+        _shipTypeSelector.backgroundColor = UIColor.whiteColor()
+        _underlyingView.backgroundColor = UIColor.blackColor()
         _underlyingView.addSubview(_shipTypeSelector)
         
         _underlyingView.addSubview(_placementGrid)
         _placementGrid.delegate = self
         view = _underlyingView
-        view.backgroundColor = UIColor.whiteColor()
+        
         
         self.title = "Place Ships"
     }
@@ -82,12 +85,13 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
             default:
                 return
             }
-            
+            recalculatePickerData()
             
         }
     
     }
     
+  
     func numberOfComponentsInPickerView(pickerView: UIPickerView) ->Int
     {
         return 2
@@ -125,28 +129,13 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
                 horizontalInsert = false
             case "Horizontal":
                 horizontalInsert = true
-            case "Carrier":
-
-                sType = Carrier()
-    
-            case "Battleship":
-
-                sType = BattleShip()
-            case "Submarine":
-
-                sType = Submarine()
-            case "Destroyer":
-
-                sType = Destroyer()
-            case "Patrol":
-
-                sType = Patrol()
+       
             
             default:
                 recalculatePickerData()
             
         }
-        recalculatePickerData()
+        
         
     }
     
@@ -154,29 +143,38 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
     func recalculatePickerData()
     {
         var newData: [String] = []
-        if(!_carrierPlaced)
+        if(!_carrierPlaced && !_battleshipPlaced && !_destroyerPlaced && !_submaringePlaced && !_patrolPlaced)
         {
-            newData.append("Carrier")
-        }
-        if(!_battleshipPlaced)
-        {
-            newData.append("Battleship")
-        }
-        if(!_destroyerPlaced)
-        {
-            newData.append("Destroyer")
-        }
-        if(!_submaringePlaced)
-        {
-            newData.append("Submarine")
-        }
-        if(!_patrolPlaced)
-        {
-            newData.append("Patrol")
+            _shipTypeSelector.selectRow(0, inComponent: 1, animated: true)
+            sType = Carrier()
+            return
         }
         
-        _pickerData[1] = newData
-        numberOfComponentsInPickerView(_shipTypeSelector)
-   
+        if(_carrierPlaced)
+        {
+            _shipTypeSelector.selectRow(1, inComponent: 1, animated: false)
+            sType = BattleShip()
+        }
+        if(_battleshipPlaced)
+        {
+            _shipTypeSelector.selectRow(2, inComponent: 1, animated: false)
+            sType = Submarine()
+        }
+        if(_submaringePlaced)
+        {
+            _shipTypeSelector.selectRow(3, inComponent: 1, animated: false)
+            sType = Destroyer()
+        }
+        if(_destroyerPlaced)
+        {
+            _shipTypeSelector.selectRow(4, inComponent: 1, animated: false)
+            sType = Patrol()
+        }
+        if(_patrolPlaced)
+        {
+           
+           delegate?.AppStateChanged("placed")
+        }
+     
     }
 }
