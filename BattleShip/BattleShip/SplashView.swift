@@ -32,11 +32,11 @@ class SplashView: UIView
         addSubview(_texture)
         //set up ui components and add them as subviews
         _artView = UIView(frame: frame)
-        _artView.backgroundColor = UIColor(red: 0.07, green: 0.2, blue: 0.45, alpha: 0.94)
+        _artView.backgroundColor = UIColor(red: 0.07, green: 0.4, blue: 0.75, alpha: 0.94)
         addSubview(_artView)
         
         _newGame = UIButton()
-        _newGame.backgroundColor = UIColor(red: 0, green:0.85, blue:0.5, alpha: 1.0)
+        _newGame.backgroundColor = UIColor(red: 0, green:0.85, blue:0.3, alpha: 1.0)
         _newGame.setTitle("New Game", forState: UIControlState.Normal)
         _newGame.addTarget(self, action: "newGamePressed", forControlEvents: UIControlEvents.TouchDown)
         addSubview(_newGame)
@@ -49,7 +49,7 @@ class SplashView: UIView
         
         _titleLabel = UILabel()
         _titleLabel.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-        _titleLabel.text = "BATTLESHIP"; _titleLabel.textAlignment = NSTextAlignment.Center
+        _titleLabel.text = "Battleship"; _titleLabel.textAlignment = NSTextAlignment.Center
         _titleLabel.textColor = UIColor.whiteColor(); _titleLabel.font = UIFont.boldSystemFontOfSize(40.0)
         addSubview(_titleLabel)
     }

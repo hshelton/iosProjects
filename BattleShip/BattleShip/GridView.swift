@@ -115,13 +115,13 @@ class GridView: UIView
     
     //done to make sure we're redrawing everything
     CGContextAddRect(context, all)
-    CGContextSetFillColorWithColor(context, UIColor(red: 0, green: 0.4, blue: 0.95, alpha: 1.0).CGColor)
+    CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor)
     
     CGContextDrawPath(context, kCGPathFill)
     let interval: CGFloat = width / 10
     
-    CGContextSetStrokeColorWithColor(context, UIColor.grayColor().CGColor)
-    CGContextSetLineWidth(context, 1.5)
+    CGContextSetStrokeColorWithColor(context, UIColor.greenColor().CGColor)
+    CGContextSetLineWidth(context, 0.5)
     
     CGContextMoveToPoint(context, 0.0, 0.0)
     
@@ -152,7 +152,7 @@ class GridView: UIView
     if(redrawSelected)
     {
         CGContextAddRect(context, rectToDraw)
-        let invalidColor: UIColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.1)
+        let invalidColor: UIColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.2)
         CGContextSetFillColorWithColor(context, invalidColor.CGColor)
         CGContextDrawPath(context, kCGPathFill)
         redrawSelected = false
@@ -160,7 +160,7 @@ class GridView: UIView
     }
     // draw all the saved rectangles
 
-    CGContextSetFillColorWithColor(context, UIColor.darkGrayColor().CGColor)
+    CGContextSetFillColorWithColor(context, UIColor(red: 0, green: 0.5, blue: 0, alpha: 1).CGColor)
     CGContextSetLineCap(context, CGLineCap(2))
     
     //first rectangle is being drawn twice, eliminate duplicate shadow

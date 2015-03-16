@@ -46,7 +46,8 @@ class ShipPlacementController: UIViewController, UIPickerViewDataSource, UIPicke
         
         _shipTypeSelector.dataSource = self
         _shipTypeSelector.delegate = self
-        _shipTypeSelector.backgroundColor = UIColor.whiteColor()
+        _shipTypeSelector.backgroundColor = UIColor(patternImage: UIImage(named:"steel.jpg")!)
+ 
         _underlyingView.backgroundColor = UIColor.blackColor()
         _underlyingView.addSubview(_shipTypeSelector)
         
