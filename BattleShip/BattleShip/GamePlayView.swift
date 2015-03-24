@@ -11,19 +11,19 @@ import UIKit
 
 
 
-class GamePlayView: UIView
+class GamePlayView: UIView, GridViewRegistrant
 {
 
-    private var _enemyLabel:UILabel! = nil
+    var _enemyLabel:UILabel! = nil
     var _opponentGrid:GridView! = nil
-    private var _youLabel: UILabel! = nil
+    var _youLabel: UILabel! = nil
     var _youGrid: GridView! = nil
-    private var _stats: UIView! = nil
+    var _stats: UIView! = nil
     var _yourHP: UILabel! = nil
     var _enemyHP: UILabel! = nil
     var offGreen: UIColor = UIColor(red: 0, green:0.85, blue:0.3, alpha: 1.0)
     var greenText: UIColor = UIColor(red: 0, green: 0.5, blue: 0, alpha: 1)
-    weak var delegate: AppStateUpdateResponder?
+    weak var delegate: GridViewRegistrant?
     
     override init (frame: CGRect)
     {
@@ -41,16 +41,18 @@ class GamePlayView: UIView
         
         _opponentGrid = GridView()
         _youGrid = GridView()
+        _opponentGrid.delegate = self
+        _youGrid.delegate = self
         
         _stats = UIView()
         _stats.backgroundColor = UIColor.blackColor()
         
         _yourHP = UILabel(); _yourHP.font = UIFont(name: "battle", size: 8.0)
-        _yourHP.text = "Your Fleet: 100%"; _yourHP.textAlignment = NSTextAlignment.Center
+        _yourHP.text = "You: 100%"; _yourHP.textAlignment = NSTextAlignment.Center
         _yourHP.textColor = greenText
         
         _enemyHP = UILabel(); _enemyHP.font = UIFont(name: "battle", size: 8.0)
-        _enemyHP.text = "Enemy Fleet: 100%";  _enemyHP.textAlignment = NSTextAlignment.Center
+        _enemyHP.text = "Enemy: 100%";  _enemyHP.textAlignment = NSTextAlignment.Center
         _enemyHP.textColor = greenText
         
         addSubview(_enemyLabel)
@@ -92,19 +94,14 @@ class GamePlayView: UIView
         setNeedsDisplay()
     }
     
-    override func drawRect(rect: CGRect)
+
+   
+    func getRowAndColumn (row: Character, column: Int)
     {
+        //just pass this information up a level in inheritance
+        delegate?.getRowAndColumn(row, column: column)
         
     }
-    
-    func listGamesPressed()
-    {
-        //notify those interested that the application state has changed
-        delegate?.AppStateChanged("list")
-    }
-    
-    
-    
     
     
 }

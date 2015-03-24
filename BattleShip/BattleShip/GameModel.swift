@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import QuartzCore
 
 class Game {
     
@@ -17,10 +18,13 @@ class Game {
     
     var Player1Grid: ShipGrid = ShipGrid()
     var Player2Grid: ShipGrid = ShipGrid()
-    
+    var Name: String = "Game001"
     var P1Turn: Bool = true
     init()
     {
-        
+     
     }
+    
+    
+
 }

@@ -12,24 +12,33 @@ protocol GridViewRegistrant:class
 {
     func getRowAndColumn (row: Character, column: Int)
 }
+protocol ShipGridProvider:class
+{
+    func supplyShipGrid()
+}
 
 class GridView: UIView
 {
     weak var delegate: GridViewRegistrant? = nil
-
+    weak var gridDelegate: ShipGridProvider? = nil
     //the rectangle that is selected
     var rectToDraw: CGRect = CGRectZero
     var redrawSelected: Bool = false
     var _row: Character = "z"
     var _column: Int = -1
+    var never_redraw: Bool = false
     
     //the rectangles that make up validly placed ships
     var rectsToDraw: [CGRect] = []
-    
+    var missedSquares: [CGRect] = []
+    var hitSquares: [CGRect] = []
+
+
     
     override init(frame: CGRect)
     {
         super.init(frame: frame)
+
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -40,6 +49,7 @@ class GridView: UIView
     {
         super.init()
     }
+    
     
     //called by parent view controller add a few more rectangles to the left or below the last drawn
     func updateRectsToDraw(addXMore: Int, horizontal: Bool)
@@ -93,10 +103,12 @@ class GridView: UIView
     
     let chosen: CGRect = CGRect(x: xRounded, y: yRounded, width: xInterval, height: yInterval)
     
-    setNeedsDisplay()
+   
     rectToDraw = chosen
     updateSelected(xRounded, Y:yRounded, XInterval: xInterval, YInterval: yInterval)
     redrawSelected = true
+
+     setNeedsDisplay()
     }
     
      override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -149,10 +161,10 @@ class GridView: UIView
     }
     // draw the current selected
     
-    if(redrawSelected)
+    if(redrawSelected && !never_redraw)
     {
         CGContextAddRect(context, rectToDraw)
-        let invalidColor: UIColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.2)
+        let invalidColor: UIColor = UIColor(red: 1.0, green: 0.0, blue: 1.0, alpha: 0.2)
         CGContextSetFillColorWithColor(context, invalidColor.CGColor)
         CGContextDrawPath(context, kCGPathFill)
         redrawSelected = false
@@ -165,70 +177,180 @@ class GridView: UIView
     
     //first rectangle is being drawn twice, eliminate duplicate shadow
     var tempBugFix: Int = 0
-    for r in rectsToDraw
+        for r in rectsToDraw
+        {
+                CGContextAddRect(context, r)
+                CGContextDrawPath(context, kCGPathFill)
+        }
+    
+    CGContextSetFillColorWithColor(context,  UIColor.whiteColor().CGColor)
+    for r in missedSquares
     {
-  
-            CGContextAddRect(context, r)
-            CGContextDrawPath(context, kCGPathFill)
-
-
+        CGContextAddRect(context, r)
+        CGContextDrawPath(context, kCGPathFill)
     }
-  
+    
+    CGContextSetFillColorWithColor(context,  UIColor.redColor().CGColor)
+    for r in hitSquares
+    {
+        CGContextAddRect(context, r)
+        CGContextDrawPath(context, kCGPathFill)
+    }
+         gridDelegate?.supplyShipGrid()  
     }
     
     //tells those interested the new row and column
     func updateSelected(X: CGFloat, Y: CGFloat, XInterval:CGFloat, YInterval:CGFloat)
     {
-       // _column = Int( CGFloat(X) / XInterval )
-      //  var tempRow: Int = Int( CGFloat(Y) / YInterval )
-       /* var columnIndex: CGFloat = XInterval
-        var tempCol: Int = 0
+       
+        var rowRes:CGFloat = Y/YInterval
+        var colRes:CGFloat = X/XInterval
+        _column = Int(colRes)
+        
+        if(rowRes < 1)
+        {
+            _row = "a"
+        }
+        else if(rowRes >= 1 && rowRes < 2)
+        {
+            _row = "b"
+        }
+        else if (rowRes >= 2 && rowRes < 3)
+        {
+            _row = "c"
+        }
+        else if (rowRes >= 3 && rowRes < 4)
+        {
+            _row = "d"
+        }
+        else if (rowRes >= 4 && rowRes < 5)
+        {
+            _row = "e"
+        }
+        else if (rowRes >= 5 && rowRes < 6)
+        {
+            _row = "f"
+        }
+        
+        else if(rowRes >= 6 && rowRes < 7)
+        {
+            _row = "g"
+        }
+        else if (rowRes >= 7 && rowRes < 8)
+        {
+            _row = "h"
+        }
+        else if(rowRes >= 8 && rowRes < 8.95)
+        {
+            _row = "i"
+        }
+        else
+        {
+            _row = "j"
+        }
+    
+        //invoke delegate, tell delegate to attempt to update the model
+        delegate?.getRowAndColumn(_row, column: _column)
+        
         
     
-        
-        
-        while(columnIndex < X)
-        {
-            columnIndex+=XInterval
-            tempCol++
-        }
-        
-        var rowIndex: CGFloat = 0.0
-        var tempRow: Int = 0
-        
-     
-        while(rowIndex < Y )
-        {
-            rowIndex+=YInterval
-            tempRow++
-        }
-        _column = tempCol
-*/
-        var rowRes = Int(Y/YInterval)
-        var colRes = Int(X/XInterval)
-        _column = colRes
-        
-        switch(rowRes)
-        {
-        case 0: _row = "a"
-        case 1: _row = "b"
-        case 2: _row = "c"
-        case 3: _row = "d"
-        case 4: _row = "e"
-        case 5: _row = "f"
-        case 6: _row = "g"
-        case 7: _row = "h"
-        case 8: _row = "i"
-        case 9: _row = "j"
-        default:
-            _row = "z"
-        }
-        //invoke delegate, tell delegate to attempt to update the model
-        
-        
-        delegate?.getRowAndColumn(_row, column: _column)
     }
     
+    //this function draws multiple squares onto the grid from a model
+    func DrawLaunchesFromGrid(grid: [String])
+    {
+        redrawSelected = false
+        for var i = 0; i < grid.count; i++
+        {
+            if(grid[i] == "m")
+            {
+                let row:Int = i/10
+                let col:Int = i%10
+                
+                ColorSquare(col, YOffset: row, hit: false)
+            }
+            else if(grid[i] == "h")
+            {
+                let row:Int = i/10
+                let col:Int = i%10
+                 ColorSquare(col, YOffset: row, hit: true)
+            }
+        }
+      
+    }
+    
+  
+    
+    
+    func DrawSquaresForShipsFromGrid(grid: [String])
+    {
+         redrawSelected = false
+        for var i = 0; i < grid.count; i++
+        {
+            if(grid[i] == "s")
+            {
+                let row:Int = i/10
+                let col:Int = i%10
+                
+                AddShip(col, YOffset: row)
+            }
+            if(grid[i]=="m")
+            {
+                let row:Int = i/10
+                let col:Int = i%10
+                ColorSquare(col, YOffset:row, hit: false)
+            }
+            if(grid[i]=="h")
+            {
+                let row:Int = i/10
+                let col:Int = i%10
+                ColorSquare(col, YOffset:row, hit: true)
+            }
+            
+          
+        }
+    }
+    
+    func AddShip(XOffset: Int, YOffset: Int)
+    {
+        let YInterval: CGFloat = bounds.height / 10
+        let XInterval:CGFloat = bounds.width / 10
+        
+        var rX:CGFloat = CGFloat(XInterval * CGFloat(XOffset))
+        var rY:CGFloat = CGFloat(YInterval * CGFloat(YOffset))
+        
+        let rec: CGRect = CGRect(x: rX, y: rY, width: XInterval, height: YInterval)
+        
+         rectsToDraw.append(rec)
+        
+        setNeedsDisplay()
+    }
+    
+    
+    
+    //save a colored square on the grid
+    func ColorSquare(XOffset: Int, YOffset: Int, hit: Bool)
+    {
+ 
+        let YInterval: CGFloat = bounds.height / 10
+        let XInterval:CGFloat = bounds.width / 10
+        
+        var rX:CGFloat = CGFloat(XInterval * CGFloat(XOffset))
+        var rY:CGFloat = CGFloat(YInterval * CGFloat(YOffset))
+        
+        let rec: CGRect = CGRect(x: rX, y: rY, width: XInterval, height: YInterval)
+        
+        if(hit)
+        {
+            hitSquares.append(rec)
+        }
+        else
+        {
+            missedSquares.append(rec)
+        }
+   
+        setNeedsDisplay()
+    }
     
     
 

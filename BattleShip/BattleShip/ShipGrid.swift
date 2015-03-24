@@ -68,15 +68,23 @@ class ShipGrid: GameGrid
     // returns true if the missle was a strike
     func intakeMissile (row: Character, column: Int) -> Bool
     {
-        if(GetContentsOfGridCell(row, col: column) == "e")
+        var test = GetContentsOfGridCell(row, col: column)
+        if(GetContentsOfGridCell(row, col: column) == "s")
         {
-            SetContentsOfGridCell(row, col: column, contents: "h")
+            SetContentsNotForPlacement(row, col: column, contents: "h")
             return true
         }
-        else
+    
+        if(GetContentsOfGridCell(row, col: column)=="h")
         {
-            SetContentsOfGridCell(row, col: column, contents: "m")
+            return false
         }
+        if(GetContentsOfGridCell(row, col: column) == "e")
+        {
+            SetContentsNotForPlacement(row, col: column, contents: "m")
+            return false
+        }
+        
         return false
     }
     

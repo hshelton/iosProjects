@@ -73,28 +73,23 @@ class Patrol: Ship
 
 class Fleet
 {
-    var fleetCarrier: Carrier = Carrier()
-    var fleetBattleShip: BattleShip = BattleShip()
-    var fleetSubMarine: Submarine = Submarine()
-    var fleetDestroyer: Destroyer = Destroyer()
-    var fleetPatrol: Patrol = Patrol()
+    var hp = 17
     
     var isDestroyed: Bool
     {
-        return (fleetCarrier._hp == 0 && fleetBattleShip._hp == 0 && fleetSubMarine._hp == 0 && fleetDestroyer._hp == 0 && fleetPatrol._hp == 0)
+        return (hp == 0)
     }
     
-    var shipsRemaining: Int
+    func decrementHp()
     {
-        var count = 0
-        if(fleetCarrier._hp != 0) {count++}
-        if(fleetBattleShip._hp != 0) {count++}
-        if(fleetSubMarine._hp != 0) {count++}
-        if(fleetDestroyer._hp != 0) {count++}
-        if(fleetPatrol._hp != 0) {count++}
-        
-        return count
+        hp--
     }
 
+    func healthAsPercentage()-> String
+    {
+        let hp1: Float = Float(hp)
+        let rounded  = round((hp1/17 * 100))
+        return String(format: "%.2f",rounded)
+    }
     
 }

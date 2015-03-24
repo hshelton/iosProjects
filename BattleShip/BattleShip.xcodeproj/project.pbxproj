@@ -16,10 +16,13 @@
 		BC217C011AA1570900724C8C /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C001AA1570900724C8C /* GameGrid.swift */; };
 		BC217C031AA162BF00724C8C /* ShipGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C021AA162BF00724C8C /* ShipGrid.swift */; };
 		BC217C051AA1636200724C8C /* Fleet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C041AA1636200724C8C /* Fleet.swift */; };
+		BC31A2851ABF2232004B0086 /* GamePlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31A2841ABF2232004B0086 /* GamePlayController.swift */; };
+		BC4779601ABF55A300FF4F4F /* explode.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC47795F1ABF55A300FF4F4F /* explode.mp3 */; };
+		BC4779621ABF57E800FF4F4F /* miss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC4779611ABF57E800FF4F4F /* miss.mp3 */; };
 		BC4C3C011AA571D300BCD8C8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */; };
 		BC5578D71AAB6A0C0019C3E3 /* ShipPlacementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5578D61AAB6A0C0019C3E3 /* ShipPlacementController.swift */; };
 		BC72494B1AA9492E00EA8EBF /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC72494A1AA9492E00EA8EBF /* SplashView.swift */; };
-		BCA91DD61AB4C96800BC2AD2 /* GamePlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA91DD51AB4C96800BC2AD2 /* GamePlayController.swift */; };
+		BCA91DD61AB4C96800BC2AD2 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA91DD51AB4C96800BC2AD2 /* PlayerViewController.swift */; };
 		BCA91DD81AB4D65800BC2AD2 /* GamePlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA91DD71AB4D65800BC2AD2 /* GamePlayView.swift */; };
 		BCA91DEC1AB4E94400BC2AD2 /* earth.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCA91DEB1AB4E94400BC2AD2 /* earth.jpg */; };
 		BCA91DED1AB4E94400BC2AD2 /* earth.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCA91DEB1AB4E94400BC2AD2 /* earth.jpg */; };
@@ -27,6 +30,8 @@
 		BCCBCF161AA9532F00782C5D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCBCF151AA9532F00782C5D /* GameViewController.swift */; };
 		BCCBCF181AA9536100782C5D /* GamesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCBCF171AA9536100782C5D /* GamesListViewController.swift */; };
 		BCCD21031AA2589B0062EE24 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD21021AA2589B0062EE24 /* GridView.swift */; };
+		BCD439931ABE13110069344D /* TransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD439921ABE13110069344D /* TransitionController.swift */; };
+		BCD439951ABE13870069344D /* TransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD439941ABE13870069344D /* TransitionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,16 +58,21 @@
 		BC217C001AA1570900724C8C /* GameGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
 		BC217C021AA162BF00724C8C /* ShipGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipGrid.swift; sourceTree = "<group>"; };
 		BC217C041AA1636200724C8C /* Fleet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fleet.swift; sourceTree = "<group>"; };
+		BC31A2841ABF2232004B0086 /* GamePlayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlayController.swift; sourceTree = "<group>"; };
+		BC47795F1ABF55A300FF4F4F /* explode.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explode.mp3; sourceTree = "<group>"; };
+		BC4779611ABF57E800FF4F4F /* miss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = miss.mp3; sourceTree = "<group>"; };
 		BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BC5578D61AAB6A0C0019C3E3 /* ShipPlacementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipPlacementController.swift; sourceTree = "<group>"; };
 		BC72494A1AA9492E00EA8EBF /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		BCA91DD51AB4C96800BC2AD2 /* GamePlayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlayController.swift; sourceTree = "<group>"; };
+		BCA91DD51AB4C96800BC2AD2 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		BCA91DD71AB4D65800BC2AD2 /* GamePlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlayView.swift; sourceTree = "<group>"; };
 		BCA91DEB1AB4E94400BC2AD2 /* earth.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = earth.jpg; path = BattleShip/earth.jpg; sourceTree = SOURCE_ROOT; };
 		BCCB047B1AB548A4006B14A1 /* steel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = steel.jpg; sourceTree = "<group>"; };
 		BCCBCF151AA9532F00782C5D /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		BCCBCF171AA9536100782C5D /* GamesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesListViewController.swift; sourceTree = "<group>"; };
 		BCCD21021AA2589B0062EE24 /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		BCD439921ABE13110069344D /* TransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionController.swift; sourceTree = "<group>"; };
+		BCD439941ABE13870069344D /* TransitionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +115,8 @@
 		BC217BD81AA1557600724C8C /* BattleShip */ = {
 			isa = PBXGroup;
 			children = (
+				BC4779611ABF57E800FF4F4F /* miss.mp3 */,
+				BC47795F1ABF55A300FF4F4F /* explode.mp3 */,
 				BCCB047B1AB548A4006B14A1 /* steel.jpg */,
 				BC7249491AA7D6E700EA8EBF /* Controllers */,
 				BCCD21011AA258570062EE24 /* Views */,
@@ -161,7 +173,9 @@
 				BCCBCF151AA9532F00782C5D /* GameViewController.swift */,
 				BCCBCF171AA9536100782C5D /* GamesListViewController.swift */,
 				BC5578D61AAB6A0C0019C3E3 /* ShipPlacementController.swift */,
-				BCA91DD51AB4C96800BC2AD2 /* GamePlayController.swift */,
+				BCA91DD51AB4C96800BC2AD2 /* PlayerViewController.swift */,
+				BCD439921ABE13110069344D /* TransitionController.swift */,
+				BC31A2841ABF2232004B0086 /* GamePlayController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -172,6 +186,7 @@
 				BCCD21021AA2589B0062EE24 /* GridView.swift */,
 				BC72494A1AA9492E00EA8EBF /* SplashView.swift */,
 				BCA91DD71AB4D65800BC2AD2 /* GamePlayView.swift */,
+				BCD439941ABE13870069344D /* TransitionView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -259,6 +274,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC217BE31AA1557600724C8C /* Images.xcassets in Resources */,
+				BC4779601ABF55A300FF4F4F /* explode.mp3 in Resources */,
+				BC4779621ABF57E800FF4F4F /* miss.mp3 in Resources */,
 				BCCB047C1AB548A4006B14A1 /* steel.jpg in Resources */,
 				BC4C3C011AA571D300BCD8C8 /* Default-568h@2x.png in Resources */,
 				BCA91DEC1AB4E94400BC2AD2 /* earth.jpg in Resources */,
@@ -283,15 +300,18 @@
 				BCCBCF161AA9532F00782C5D /* GameViewController.swift in Sources */,
 				BC217BDE1AA1557600724C8C /* ApplicationViewController.swift in Sources */,
 				BC217BDC1AA1557600724C8C /* AppDelegate.swift in Sources */,
+				BCD439931ABE13110069344D /* TransitionController.swift in Sources */,
 				BCCD21031AA2589B0062EE24 /* GridView.swift in Sources */,
+				BCD439951ABE13870069344D /* TransitionView.swift in Sources */,
 				BC217C011AA1570900724C8C /* GameGrid.swift in Sources */,
 				BC217BFF1AA156B000724C8C /* PlayerModel.swift in Sources */,
 				BCCBCF181AA9536100782C5D /* GamesListViewController.swift in Sources */,
+				BC31A2851ABF2232004B0086 /* GamePlayController.swift in Sources */,
 				BC217BFC1AA1567E00724C8C /* GameModel.swift in Sources */,
 				BC217C031AA162BF00724C8C /* ShipGrid.swift in Sources */,
 				BC5578D71AAB6A0C0019C3E3 /* ShipPlacementController.swift in Sources */,
 				BCA91DD81AB4D65800BC2AD2 /* GamePlayView.swift in Sources */,
-				BCA91DD61AB4C96800BC2AD2 /* GamePlayController.swift in Sources */,
+				BCA91DD61AB4C96800BC2AD2 /* PlayerViewController.swift in Sources */,
 				BC217C051AA1636200724C8C /* Fleet.swift in Sources */,
 				BC72494B1AA9492E00EA8EBF /* SplashView.swift in Sources */,
 			);

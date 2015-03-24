@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol gameLoader:class
+{
+    func getGame(number: Int)
+}
 class GamesListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     //this is the view that this controller manipulates
     var tableView: UITableView {return view as UITableView}
+    var numberofGameSaves = 0
+    weak var delegate: gameLoader? = nil
     override func loadView()
     {
         view = UITableView(frame: CGRectZero, style:UITableViewStyle.Grouped)
@@ -26,20 +32,19 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
         title = "Load Game"
         tableView.dataSource = self
         tableView.delegate = self
-        
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let item: String = "A played Game"
+        let item: String = "Game" + String(indexPath.item)
         var cell: UITableViewCell = UITableViewCell(style:UITableViewCellStyle.Subtitle, reuseIdentifier: NSStringFromClass(UITableViewCell))
         cell.textLabel?.text = item
         return cell
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
     {
-        
+        //request that parent controller loads that game
+        delegate?.getGame(indexPath.item)
     }
     //implementing the protocol required functions
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -48,7 +53,12 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 1
+        return numberofGameSaves
     }
     
+  
+
+
 }
+
+

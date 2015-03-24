@@ -56,10 +56,17 @@ class GameGrid
         {
             return false
         }
+        var index = _grid[res * 10 + col]
         _grid[res * 10 + col ] = contents
      
 
         return true
+    }
+    
+    func SetContentsNotForPlacement(row: Character, col: Int, contents:String)
+    {
+        let res: Int = getIntValue(row)
+        _grid[res * 10 + col ] = contents
     }
     
     func SetContentsOfGridCellWithIntRow(row:Int, col: Int, contents:String) -> Bool
