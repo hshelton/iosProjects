@@ -22,7 +22,9 @@ class GamePlayController: UIViewController, GridViewRegistrant, AppStateUpdateRe
     var missSound: SystemSoundID = 0
   
     weak var delegate: AppStateUpdateResponder? = nil
+
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         _player1ViewController._opponentGrid = _gameModel.Player2Grid._grid
         _player1ViewController._yourGrid = _gameModel.Player1Grid._grid
@@ -33,6 +35,9 @@ class GamePlayController: UIViewController, GridViewRegistrant, AppStateUpdateRe
         _transitionViewController.delegate = self
         _gameModel.P1Turn = true
         
+        _player1ViewController.playerLabel = "P1"
+        _player2ViewController.playerLabel = "P2"
+        
         // Load sounds
         let soundURL = NSBundle.mainBundle().URLForResource("explode", withExtension: "mp3")
         AudioServicesCreateSystemSoundID(soundURL, &explodeSound)
@@ -42,10 +47,13 @@ class GamePlayController: UIViewController, GridViewRegistrant, AppStateUpdateRe
         
         
  
-  self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
         
         self.navigationController?.pushViewController(_player1ViewController, animated: true)
         self.navigationController?.navigationItem.leftBarButtonItem?.title = "Quit"
+        
+  
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -143,6 +151,8 @@ class GamePlayController: UIViewController, GridViewRegistrant, AppStateUpdateRe
         self.navigationController?.pushViewController(_transitionViewController, animated: false)
         
     }
+    
+
     
     func AppStateChanged(reason: String)
     {

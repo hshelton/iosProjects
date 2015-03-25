@@ -21,6 +21,8 @@ class TransitionController: UIViewController, AppStateUpdateResponder
         underlyingView.backgroundColor = UIColor(red: 0, green: 0.5, blue: 0.85, alpha: 1.0)
         
         title = "Pass Device"
+        
+        
     }
     
     override func loadView()

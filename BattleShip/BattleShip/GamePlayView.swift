@@ -73,6 +73,10 @@ class GamePlayView: UIView, GridViewRegistrant
         super.init()
     }
     
+    func setPlayerLabelText(labText: String)
+    {
+        _youLabel.text = _youLabel.text! + " (\(labText))"
+    }
 
     override func layoutSubviews()
     {

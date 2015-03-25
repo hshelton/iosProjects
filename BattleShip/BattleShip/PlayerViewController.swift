@@ -17,15 +17,23 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
   
     var _opponentGrid: [String] = []
     var _yourGrid: [String] = []
-
+    var playerLabel: String = ""
     
     weak var delegate: GridViewRegistrant?
+    weak var saveDelegate: AppStateUpdateResponder?
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         _underlyingView._youGrid.DrawSquaresForShipsFromGrid(_yourGrid)
         _underlyingView._opponentGrid.DrawLaunchesFromGrid(_opponentGrid)
+        
+        var saveButton: UIBarButtonItem = UIBarButtonItem(title: "Save", style:UIBarButtonItemStyle.Plain, target: self, action: "writeToFile")
+        
+
+        self.navigationItem.rightBarButtonItem = saveButton
+        self.navigationItem.leftBarButtonItem?.title = "Quit"
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
     }
 
     override func loadView()
@@ -34,9 +42,9 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
         view = _underlyingView
         _underlyingView.delegate = self
         _underlyingView._opponentGrid.gridDelegate = self
-      
+        _underlyingView.setPlayerLabelText(playerLabel)
   
-        
+
         self.title = "Battle!"
     }
     
@@ -70,5 +78,14 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
         
     }
     
+    func writeToFile()
+    {
+        var alertView = UIAlertView();
+        alertView.addButtonWithTitle("Ok");
+        alertView.title = "Save";
+        alertView.message = "Game Saved";
+        alertView.show();
+        saveDelegate?.AppStateChanged("saveNow")
+    }
 
 }

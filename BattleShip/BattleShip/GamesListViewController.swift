@@ -11,6 +11,7 @@ import UIKit
 protocol gameLoader:class
 {
     func getGame(number: Int)
+    func returnIP(number: Int) -> Bool
 }
 class GamesListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
@@ -18,6 +19,7 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
     var tableView: UITableView {return view as UITableView}
     var numberofGameSaves = 0
     weak var delegate: gameLoader? = nil
+    weak var appDel: AppStateUpdateResponder? = nil
     override func loadView()
     {
         view = UITableView(frame: CGRectZero, style:UITableViewStyle.Grouped)
@@ -32,20 +34,36 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
         title = "Load Game"
         tableView.dataSource = self
         tableView.delegate = self
+        
+        var newGameButton: UIBarButtonItem = UIBarButtonItem(title: "New Game", style:UIBarButtonItemStyle.Plain, target: self, action: "newGame")
+        
+        
+        self.navigationItem.rightBarButtonItem = newGameButton
+    
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let item: String = "Game" + String(indexPath.item)
+        let item: String = "Game " + String(indexPath.item)
         var cell: UITableViewCell = UITableViewCell(style:UITableViewCellStyle.Subtitle, reuseIdentifier: NSStringFromClass(UITableViewCell))
         cell.textLabel?.text = item
+        
+        var ip: Bool? = delegate?.returnIP(indexPath.item)
+        if(ip!)
+        {
+            var text: String = item + " (ongoing)"
+            cell.textLabel?.text = text
+        }
+        
         return cell
     }
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         //request that parent controller loads that game
         delegate?.getGame(indexPath.item)
     }
+   
+ 
     //implementing the protocol required functions
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
@@ -56,6 +74,11 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
         return numberofGameSaves
     }
     
+    //request new game
+    func newGame()
+    {
+        appDel?.AppStateChanged("new")
+    }
   
 
 
