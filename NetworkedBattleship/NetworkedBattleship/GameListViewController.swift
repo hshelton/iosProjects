@@ -1,27 +1,19 @@
 //
-//  GamesListViewController.swift
-//  BattleShip
+//  GameListViewController.swift
+//  NetworkedBattleship
 //
-//  Created by Hayden Shelton on 3/5/15.
+//  Created by Hayden Shelton on 3/29/15.
 //  Copyright (c) 2015 Hayden Shelton. All rights reserved.
 //
 
 import UIKit
 
-protocol gameLoader:class
-{
-    func getGame(number: Int)
-    func returnIP(number: Int) -> Bool
-}
-class GamesListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
+class GameListViewController: UIViewController,  UITableViewDataSource, UITableViewDelegate
 {
     //this is the view that this controller manipulates
     var tableView: UITableView {return view as UITableView}
-
-
-    weak var appDel: AppStateUpdateResponder? = nil
     var serverGameManager = ServerGameManager()
-    
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -37,7 +29,7 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
     {
         serverGameManager.refreshGamesList()
         view = UITableView(frame: CGRectZero, style:UITableViewStyle.Grouped)
-        
+    
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -58,8 +50,8 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
         var what = serverGameManager.getGameCount()
         return serverGameManager.getGameCount()
     }
-    
-    
+
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var gameForCell = serverGameManager.getGameForCellAtIndex(indexPath.item)
         if(gameForCell.status != "WAITING")
@@ -78,23 +70,21 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
             
             var msg: String = "\(gD.player1) vs \(gD.player2) \n \(gD.missilesLaunched) missiles launched. \(winner)"
             
-            var summaryAlert = UIAlertView(title: gD.name, message: msg, delegate: nil, cancelButtonTitle: "Close", otherButtonTitles: "OK")
+           var summaryAlert = UIAlertView(title: gD.name, message: msg, delegate: nil, cancelButtonTitle: "Close", otherButtonTitles: "OK")
             summaryAlert.show()
             
         }
         
-        
-    }
-
     
-    //request new game
+    }
+    
     func newGame()
     {
-        appDel?.AppStateChanged("new")
+        
     }
-  
-
-
+    
+    
+   
 }
 
 
