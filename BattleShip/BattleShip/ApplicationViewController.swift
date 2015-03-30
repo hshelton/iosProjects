@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ApplicationViewController: UIViewController, AppStateUpdateResponder{
+class ApplicationViewController: UIViewController, AppStateUpdateResponder, GameChosenResponder{
 
     var underlyingView: SplashView?
     var _gameController: GameViewController = GameViewController()
@@ -16,6 +16,7 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder{
     var _gamePlayController: GamePlayController = GamePlayController()
     var _transitionController: TransitionController = TransitionController()
     var _serverManager: ServerGameManager = ServerGameManager()
+    var _gameNameController: gameNameController = gameNameController()
     var _gameModel: Game = Game()
     
     
@@ -30,7 +31,7 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder{
         _serverManager.refreshGamesList()
         underlyingView = SplashView()
         underlyingView?.delegate = self
- 
+        _gameNameController._underlyingView.delegate = self
         _transitionController.delegate = self
         _gamePlayController._player1ViewController.saveDelegate = self
         _gamePlayController._player2ViewController.saveDelegate = self
@@ -50,6 +51,7 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder{
         {
         case "new":
             _gameModel = Game()
+            self.navigationController?.pushViewController(_gameNameController, animated: true)
 
         case "list":
             self.navigationController?.pushViewController(_listController, animated: true)
@@ -61,6 +63,11 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder{
             return
             
         }
+    }
+    //called whenever we are to create a new game
+    func signalCreateGame(gameName: String, playerName: String)
+    {
+        _serverManager.createGame(gameName, playerName: playerName)
     }
     
     

@@ -21,6 +21,7 @@
 		BC4779621ABF57E800FF4F4F /* miss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC4779611ABF57E800FF4F4F /* miss.mp3 */; };
 		BC4C3C011AA571D300BCD8C8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */; };
 		BC72494B1AA9492E00EA8EBF /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC72494A1AA9492E00EA8EBF /* SplashView.swift */; };
+		BC9252B61AC8D1920008FDB3 /* GameNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9252B51AC8D1920008FDB3 /* GameNameController.swift */; };
 		BCA91DD61AB4C96800BC2AD2 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA91DD51AB4C96800BC2AD2 /* PlayerViewController.swift */; };
 		BCA91DD81AB4D65800BC2AD2 /* GamePlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA91DD71AB4D65800BC2AD2 /* GamePlayView.swift */; };
 		BCA91DEC1AB4E94400BC2AD2 /* earth.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCA91DEB1AB4E94400BC2AD2 /* earth.jpg */; };
@@ -64,6 +65,7 @@
 		BC4779611ABF57E800FF4F4F /* miss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = miss.mp3; sourceTree = "<group>"; };
 		BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BC72494A1AA9492E00EA8EBF /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		BC9252B51AC8D1920008FDB3 /* GameNameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameNameController.swift; sourceTree = "<group>"; };
 		BCA91DD51AB4C96800BC2AD2 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		BCA91DD71AB4D65800BC2AD2 /* GamePlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlayView.swift; sourceTree = "<group>"; };
 		BCA91DEB1AB4E94400BC2AD2 /* earth.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = earth.jpg; path = BattleShip/earth.jpg; sourceTree = SOURCE_ROOT; };
@@ -178,6 +180,7 @@
 				BCA91DD51AB4C96800BC2AD2 /* PlayerViewController.swift */,
 				BCD439921ABE13110069344D /* TransitionController.swift */,
 				BC31A2841ABF2232004B0086 /* GamePlayController.swift */,
+				BC9252B51AC8D1920008FDB3 /* GameNameController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				BC217C011AA1570900724C8C /* GameGrid.swift in Sources */,
 				BCD236E21AC8CCBA00DFCB80 /* GameNamerView.swift in Sources */,
 				BC217BFF1AA156B000724C8C /* PlayerModel.swift in Sources */,
+				BC9252B61AC8D1920008FDB3 /* GameNameController.swift in Sources */,
 				BCD236E01AC8BF0D00DFCB80 /* ServerGameManager.swift in Sources */,
 				BCCBCF181AA9536100782C5D /* GamesListViewController.swift in Sources */,
 				BC31A2851ABF2232004B0086 /* GamePlayController.swift in Sources */,

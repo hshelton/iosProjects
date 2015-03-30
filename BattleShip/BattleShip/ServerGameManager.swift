@@ -31,7 +31,7 @@ class gameSummary
 class ServerGameManager
 {
     //the server gives us an array of JSON objects which represent games
-    private var serverGames: [Int: serverGame] = [:] //GUID to server game
+    private var serverGames: [Int: serverGame] = [:] //order created to server game
     var globalCounter = 0
     init()
     {
@@ -55,6 +55,7 @@ class ServerGameManager
     
     func getGameForCellAtIndex(index: Int) -> serverGame
     {
+        
         return serverGames[index]!
     }
     
@@ -84,14 +85,20 @@ class ServerGameManager
             let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
             println("responseString = \(responseString)")
         }
+        
+        //TODO: Save Game ID of newly created game
         task.resume()
     }
     
-    
-    //this function pulls in the games list from the server
     func refreshGamesList()
     {
-        let gameListURL: NSURL = NSURL(string:"http://battleship.pixio.com/api/v2/lobby?offset=0&results=100")!
+        refreshGamesList(0)
+    }
+    
+    //this function pulls in the games list from the server
+    func refreshGamesList(offset: Int)
+    {
+        let gameListURL: NSURL = NSURL(string:"http://battleship.pixio.com/api/v2/lobby?offset=\(offset)&results=1000")!
         let gameListJson: NSData? = NSData(contentsOfURL: gameListURL)
         if(gameListJson == nil)
         {
@@ -114,6 +121,8 @@ class ServerGameManager
             var tempGame: serverGame = serverGame(id: gameID, name: name, status: status)
             serverGames[globalCounter++] = tempGame
         }
+        
+        
     }
     
     func getDetailsForGameAtIndex(index: Int) -> gameSummary
