@@ -8,16 +8,17 @@
 
 import UIKit
 
-class ApplicationViewController: UIViewController, AppStateUpdateResponder, GameChosenResponder{
+class ApplicationViewController: UIViewController, AppStateUpdateResponder, GameChosenResponder, gameInitializeResponder{
 
     var underlyingView: SplashView?
     var _gameController: GameViewController = GameViewController()
-    var _listController: GamesListViewController = GamesListViewController()
+    var _listController: GamesListViewController? = nil
     var _gamePlayController: GamePlayController = GamePlayController()
     var _transitionController: TransitionController = TransitionController()
     var _serverManager: ServerGameManager = ServerGameManager()
     var _gameNameController: gameNameController = gameNameController()
     var _gameModel: Game = Game()
+    var _myGamesController: MyGamesListViewController = MyGamesListViewController()
     
     
     override func viewDidLoad() {
@@ -32,11 +33,14 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
         underlyingView = SplashView()
         underlyingView?.delegate = self
         _gameNameController._underlyingView.delegate = self //this controller will listen to create game signals
-        _listController.gameJoinDel = self
+        _listController = GamesListViewController()
+        _listController!.gameJoinDel = self
+        _listController!.gameStartDel = self
         _transitionController.delegate = self
         _gamePlayController._player1ViewController.saveDelegate = self
         _gamePlayController._player2ViewController.saveDelegate = self
-        _listController.appDel = self
+        _listController!.appDel = self
+        _myGamesController.gameStartDel = self
         view = underlyingView
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
  
@@ -55,10 +59,11 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
             self.navigationController?.pushViewController(_gameNameController, animated: true)
 
         case "list":
-            self.navigationController?.pushViewController(_listController, animated: true)
+            self.navigationController?.pushViewController(_listController!, animated: true)
         
-
-
+        case "myGames":
+            self.navigationController?.pushViewController(_myGamesController, animated: true)
+        
             
         default:
             return
@@ -78,7 +83,11 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
    {
         _serverManager.joinGame(playerName, gameID: id)
    }
-    
+
+    func initGame(gameGUID: String)
+    {
+        
+    }
 
 
 }

@@ -18,6 +18,7 @@ class SplashView: UIView
 {
     private var _newGame: UIButton! = nil
     private var _listGames: UIButton! = nil
+    private var _myGames: UIButton! = nil
     private var _artView: UIView! = nil
     private var _texture: UIView! = nil
     private var _titleLabel: UILabel! = nil
@@ -52,6 +53,13 @@ class SplashView: UIView
         _titleLabel.text = "Battleship"; _titleLabel.textAlignment = NSTextAlignment.Center
         _titleLabel.textColor = UIColor.whiteColor(); _titleLabel.font = UIFont.boldSystemFontOfSize(40.0)
         addSubview(_titleLabel)
+        
+        _myGames = UIButton()
+        _myGames.backgroundColor = UIColor(red: 0.5, green: 0.0, blue: 0.5, alpha: 1.0)
+        _myGames.setTitle("MyGames", forState: UIControlState.Normal)
+        _myGames.addTarget(self, action: "myGamesPressed", forControlEvents: UIControlEvents.TouchDown)
+        addSubview(_myGames)
+
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -78,6 +86,8 @@ class SplashView: UIView
    
     (_newGame.frame, _listGames.frame) = r.rectsByDividing(r.width/2, fromEdge: CGRectEdge.MinXEdge)
     _titleLabel.frame = CGRect(x: 0, y: _artView.frame.midY - 40, width: bounds.width, height: 40)
+    
+    _myGames.frame = CGRect(x: 0, y: 64, width: bounds.width, height: 50)
     }
     
     func newGamePressed()
@@ -101,6 +111,10 @@ class SplashView: UIView
         delegate?.AppStateChanged("list")
     }
     
+    func myGamesPressed()
+    {
+        delegate?.AppStateChanged("myGames")
+    }
     
     
     

@@ -32,12 +32,13 @@ class ServerGameManager
     //the server gives us an array of JSON objects which represent games
     private var serverGames: [Int: serverGame] = [:] //order created to server game
     var globalCounter = 0
-    var playerGUID: String = ""
-    var gameGUID: String = ""
+    var playerGUIDs: [String] = [] //these are my games
+    var gameGUIDs: [String] = [] //these are my player ids
     
     init()
     {
-        
+        loadPlayerIDsFromFile()
+        loadGameIDsFromFile()
     }
     
     
@@ -48,7 +49,18 @@ class ServerGameManager
         var status: String
     }
     
-    
+    //checks to see if the game in question is one of your own
+    func isMyGame(id: String) -> Bool
+    {
+        for r in gameGUIDs
+        {
+            if(r == id)
+            {
+                return true
+            }
+        }
+        return false
+    }
     
     func getGameCount() -> Int
     {
@@ -57,10 +69,37 @@ class ServerGameManager
     
     func getGameForCellAtIndex(index: Int) -> serverGame
     {
-        
         return serverGames[index]!
     }
     
+    func getGameForCellAtIndexForMyGames(index: Int) -> serverGame
+    {
+        var sG = serverGame(id: "0", name: "", status: "")
+        let gameID: String = gameGUIDs[index]
+        let getURL: String = "http://battleship.pixio.com/api/v2/lobby/"+gameID
+        let gameDetailURL: NSURL = NSURL(string: getURL)!
+        
+        let summaryData: NSData? = NSData(contentsOfURL: gameDetailURL)
+        if(summaryData == nil)
+        {
+           return sG
+        }
+        let serializedGame: NSDictionary? = NSJSONSerialization.JSONObjectWithData(summaryData!, options: .allZeros, error: nil) as NSDictionary?
+        
+        if(serializedGame == nil)
+        {
+            return sG
+        }
+        sG.name = serializedGame!["name"] as String
+        sG.status = serializedGame!["status"] as String
+        sG.id = gameID
+        return sG
+    }
+    
+    func getMyGameCount() -> Int
+    {
+        return gameGUIDs.count
+    }
     func addserverGameToList(sv: serverGame)
     {
         var name: String = sv.name
@@ -94,10 +133,16 @@ class ServerGameManager
 
             var responsePlayerID = json!["playerId"] as String
             var responseGameID = json!["gameId"] as String
+            
+           self.playerGUIDs.append(responsePlayerID)
+            self.gameGUIDs.append(responseGameID)
+            
         }
         
-        //TODO: Save Game ID of newly created game
+        
         task.resume()
+        writeGameIDsToFile()
+        writePlayerIDsToFile()
     }
     
     func refreshGamesList()
@@ -105,6 +150,11 @@ class ServerGameManager
         refreshGamesList(0)
     }
     
+    func refreshMyGamesList()
+    {
+        loadPlayerIDsFromFile()
+        loadGameIDsFromFile()
+    }
     //this function pulls in the games list from the server
     func refreshGamesList(offset: Int)
     {
@@ -166,68 +216,110 @@ class ServerGameManager
     
     func joinGame(playerName: String, gameID: String)
     {
-        let session = NSURLSession.sharedSession()
-        let url = NSURL(string: "http://battleship.pixio.com/api/v2/lobby/\(gameID)")
-        let request = NSMutableURLRequest(URL: url!)
+        var err: NSError?
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://battleship.pixio.com/api/v2/lobby/\(gameID)")!)
         request.HTTPMethod = "PUT"
-        request.setValue("application/json-rpc", forHTTPHeaderField: "Content-Type")
-        let requestDictionary = [
-            "playerName" : playerName,
-            "id"      : gameID,
+        request.setValue("application/json", forHTTPHeaderField: "content-type")
             
-        ]
-        var error: NSError?
-        let requestBody = NSJSONSerialization.dataWithJSONObject(requestDictionary, options: nil, error: &error)
-
-        request.HTTPBody = requestBody
+        let jsonObject: NSDictionary = ["playerName": playerName, "id": "gameID"]
+        let requestDict = NSJSONSerialization.dataWithJSONObject(jsonObject, options: .allZeros, error: nil)
+        request.HTTPBody = requestDict
         
-        var error2: NSError?
+        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
         
-        let task = session.dataTaskWithRequest(request) {
-            data, response, error in
-            
-            if error != nil {
-                
-                let responseObject = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error2) as? NSDictionary
-            }
-
-           
+        let gameAttributions: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: nil)! as NSDictionary
+        println(gameAttributions)
+        
+        var idReturned = gameAttributions["playerId"] as String
+        playerGUIDs.append(idReturned)
+        gameGUIDs.append(gameID)
+        
+        writeGameIDsToFile()
+        loadGameIDsFromFile()
+        writePlayerIDsToFile()
+        loadPlayerIDsFromFile()
+    }
+    
+    func writePlayerIDsToFile()
+    {
+        let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as String?
+        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battlePlayerInfo.txt")
+        var arr: NSMutableArray = []
+        
+        //add all the playerIDs to the master array
+        for entry in playerGUIDs
+        {
+            arr.addObject(entry)
         }
-         task.resume()
+        
+        //write to disk
+        arr.writeToFile(filePath!, atomically: true)
         
     }
     
-  /*  func joinGame(playerName: String, gameID: String)
-    {//this will hold the NSError if we can't create an NSDictionary from the server response
-        var err: NSError?
-      
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://battleship.pixio.com/api/v2/lobby/\(gameID)")!)
-        request.HTTPMethod = "PUT"
-        let putString = "{playerName:
+    func writeGameIDsToFile()
+    {
         
-        request.HTTPBody = putString.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            data, response, error in
-            if error != nil {
-                println("error=\(error)")
-                return
+        let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as String?
+        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battleGameInfo.txt")
+        var arr: NSMutableArray = []
+        
+        //add all the game saves to the master array
+        for entry in gameGUIDs
+        {
+            arr.addObject(entry)
+        }
+
+        //write to disk
+        arr.writeToFile(filePath!, atomically: true)
+    }
+    
+    
+    func loadGameIDsFromFile()
+    {
+        let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as String?
+        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battleGameInfo.txt")
+        //load in the file to memory
+        let fileText = String(contentsOfFile: filePath!, encoding: NSUTF8StringEncoding, error: nil)
+        gameGUIDs = []
+
+        var readArray: NSArray? = NSArray(contentsOfFile: filePath!)
+        if let activeArray = readArray
+        {
+            
+            for(var i=0; i < activeArray.count; i++)
+            {
+                var readString: String = activeArray[i] as String
+               gameGUIDs.append(readString)
             }
+        }
+
+    }
+
+    func loadPlayerIDsFromFile()
+    {
+        let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as String?
+        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battlePlayerInfo.txt")
+        //load in the file to memory
+        let fileText = String(contentsOfFile: filePath!, encoding: NSUTF8StringEncoding, error: nil)
+       playerGUIDs = []
+        
+        var readArray: NSArray? = NSArray(contentsOfFile: filePath!)
+        if let activeArray = readArray
+        {
             
-            println("response = \(response)")
-            
-            let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
-            
-            var json: NSDictionary? = NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: &err) as NSDictionary?
-            
-            
-           
+            for(var i=0; i < activeArray.count; i++)
+            {
+                var readString: String = activeArray[i] as String
+                playerGUIDs.append(readString)
+            }
         }
         
-        //TODO: Save Game ID of newly created game
-        task.resume()
-        
     }
-    */
+
+    
+    
+    
     
 }
 

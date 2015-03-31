@@ -13,6 +13,12 @@ protocol gameLoader:class
     func getGame(number: Int)
     func returnIP(number: Int) -> Bool
 }
+
+protocol gameInitializeResponder: class
+{
+    func initGame(gameGUID: String)
+    
+}
 class GamesListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     //this is the view that this controller manipulates
@@ -21,6 +27,8 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
 
     weak var appDel: AppStateUpdateResponder? = nil
     weak var gameJoinDel:GameChosenResponder? = nil
+    weak var gameStartDel: gameInitializeResponder? = nil
+    
     var serverGameManager = ServerGameManager()
     var timer: NSTimer? = nil
     override func viewDidLoad()
@@ -71,11 +79,19 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        serverGameManager.loadGameIDsFromFile()
+        serverGameManager.loadPlayerIDsFromFile()
         var gameForCell = serverGameManager.getGameForCellAtIndex(indexPath.item)
         if(gameForCell.status != "WAITING")
         {
             var gD: gameSummary = serverGameManager.getDetailsForGameAtIndex(indexPath.item)
             
+            if(serverGameManager.isMyGame(gameForCell.id))
+            {
+                gameStartDel?.initGame(gameForCell.id)
+            }
+            else
+            {
             var winner: String = gD.winner
             if(winner == "IN PROGRESS")
             {
@@ -89,7 +105,7 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
             var msg: String = "\(gD.player1) vs \(gD.player2) \n \(gD.missilesLaunched) missiles launched. \(winner)"
             
             var summaryAlert = UIAlertView(title: gD.name, message: msg, delegate: nil, cancelButtonTitle: "Close", otherButtonTitles: "OK")
-            summaryAlert.show()
+                summaryAlert.show()}
             
         }
         

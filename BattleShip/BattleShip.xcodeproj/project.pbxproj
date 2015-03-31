@@ -30,6 +30,7 @@
 		BCCBCF161AA9532F00782C5D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCBCF151AA9532F00782C5D /* GameViewController.swift */; };
 		BCCBCF181AA9536100782C5D /* GamesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCBCF171AA9536100782C5D /* GamesListViewController.swift */; };
 		BCCD21031AA2589B0062EE24 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCD21021AA2589B0062EE24 /* GridView.swift */; };
+		BCCF2CC11ACB55DE00409D86 /* MyGamesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCF2CC01ACB55DE00409D86 /* MyGamesListViewController.swift */; };
 		BCD236E01AC8BF0D00DFCB80 /* ServerGameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD236DF1AC8BF0D00DFCB80 /* ServerGameManager.swift */; };
 		BCD236E21AC8CCBA00DFCB80 /* GameNamerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD236E11AC8CCBA00DFCB80 /* GameNamerView.swift */; };
 		BCD439931ABE13110069344D /* TransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD439921ABE13110069344D /* TransitionController.swift */; };
@@ -73,6 +74,7 @@
 		BCCBCF151AA9532F00782C5D /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		BCCBCF171AA9536100782C5D /* GamesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesListViewController.swift; sourceTree = "<group>"; };
 		BCCD21021AA2589B0062EE24 /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		BCCF2CC01ACB55DE00409D86 /* MyGamesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyGamesListViewController.swift; sourceTree = "<group>"; };
 		BCD236DF1AC8BF0D00DFCB80 /* ServerGameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerGameManager.swift; sourceTree = "<group>"; };
 		BCD236E11AC8CCBA00DFCB80 /* GameNamerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameNamerView.swift; sourceTree = "<group>"; };
 		BCD439921ABE13110069344D /* TransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionController.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				BCD439921ABE13110069344D /* TransitionController.swift */,
 				BC31A2841ABF2232004B0086 /* GamePlayController.swift */,
 				BC9252B51AC8D1920008FDB3 /* GameNameController.swift */,
+				BCCF2CC01ACB55DE00409D86 /* MyGamesListViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				BCD439951ABE13870069344D /* TransitionView.swift in Sources */,
 				BC217C011AA1570900724C8C /* GameGrid.swift in Sources */,
 				BCD236E21AC8CCBA00DFCB80 /* GameNamerView.swift in Sources */,
+				BCCF2CC11ACB55DE00409D86 /* MyGamesListViewController.swift in Sources */,
 				BC217BFF1AA156B000724C8C /* PlayerModel.swift in Sources */,
 				BC9252B61AC8D1920008FDB3 /* GameNameController.swift in Sources */,
 				BCD236E01AC8BF0D00DFCB80 /* ServerGameManager.swift in Sources */,
