@@ -17,7 +17,6 @@ class gameSummary
     var winner: String = ""
     var missilesLaunched: Int = 0
     
-    
     init (_name: String, _player1: String, _player2: String, _winner:String, _missilesLaunched: Int)
     {
         name = _name
@@ -33,6 +32,9 @@ class ServerGameManager
     //the server gives us an array of JSON objects which represent games
     private var serverGames: [Int: serverGame] = [:] //order created to server game
     var globalCounter = 0
+    var playerGUID: String = ""
+    var gameGUID: String = ""
+    
     init()
     {
         
@@ -68,6 +70,9 @@ class ServerGameManager
     func createGame(gameName: String, playerName: String)
     {
         
+        //this will hold the NSError if we can't create an NSDictionary from the server response
+        var err: NSError?
+        
         let request = NSMutableURLRequest(URL: NSURL(string: "http://battleship.pixio.com/api/v2/lobby")!)
         request.HTTPMethod = "POST"
         let postString = "gameName=\(gameName)&playerName=\(playerName)"
@@ -83,7 +88,12 @@ class ServerGameManager
             println("response = \(response)")
             
             let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
-            println("responseString = \(responseString)")
+            
+            var json: NSDictionary? = NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: &err) as NSDictionary?
+            
+
+            var responsePlayerID = json!["playerId"] as String
+            var responseGameID = json!["gameId"] as String
         }
         
         //TODO: Save Game ID of newly created game
@@ -153,6 +163,72 @@ class ServerGameManager
         return gS
         
     }
+    
+    func joinGame(playerName: String, gameID: String)
+    {
+        let session = NSURLSession.sharedSession()
+        let url = NSURL(string: "http://battleship.pixio.com/api/v2/lobby/\(gameID)")
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "PUT"
+        request.setValue("application/json-rpc", forHTTPHeaderField: "Content-Type")
+        let requestDictionary = [
+            "playerName" : playerName,
+            "id"      : gameID,
+            
+        ]
+        var error: NSError?
+        let requestBody = NSJSONSerialization.dataWithJSONObject(requestDictionary, options: nil, error: &error)
+
+        request.HTTPBody = requestBody
+        
+        var error2: NSError?
+        
+        let task = session.dataTaskWithRequest(request) {
+            data, response, error in
+            
+            if error != nil {
+                
+                let responseObject = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error2) as? NSDictionary
+            }
+
+           
+        }
+         task.resume()
+        
+    }
+    
+  /*  func joinGame(playerName: String, gameID: String)
+    {//this will hold the NSError if we can't create an NSDictionary from the server response
+        var err: NSError?
+      
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://battleship.pixio.com/api/v2/lobby/\(gameID)")!)
+        request.HTTPMethod = "PUT"
+        let putString = "{playerName:
+        
+        request.HTTPBody = putString.dataUsingEncoding(NSUTF8StringEncoding)
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
+            if error != nil {
+                println("error=\(error)")
+                return
+            }
+            
+            println("response = \(response)")
+            
+            let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
+            
+            var json: NSDictionary? = NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: &err) as NSDictionary?
+            
+            
+           
+        }
+        
+        //TODO: Save Game ID of newly created game
+        task.resume()
+        
+    }
+    */
+    
 }
 
     

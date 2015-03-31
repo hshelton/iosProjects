@@ -10,6 +10,7 @@ import UIKit
 protocol GameChosenResponder: class
 {
     func signalCreateGame(gameName: String, playerName: String)
+    func signalJoinGame(playerName: String, id: String)
 }
 
 class gameNameController: UIViewController, UITextFieldDelegate

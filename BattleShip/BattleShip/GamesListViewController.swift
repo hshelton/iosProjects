@@ -20,8 +20,9 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
 
 
     weak var appDel: AppStateUpdateResponder? = nil
+    weak var gameJoinDel:GameChosenResponder? = nil
     var serverGameManager = ServerGameManager()
-    
+    var timer: NSTimer? = nil
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -30,9 +31,18 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.delegate = self
         var newGameButton: UIBarButtonItem = UIBarButtonItem(title: "New Game", style:UIBarButtonItemStyle.Plain, target: self, action: "newGame")
         self.navigationItem.rightBarButtonItem = newGameButton
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+  
         
     }
     
+    func update()
+    {
+        serverGameManager.globalCounter = 0
+        serverGameManager.refreshGamesList()
+        
+        
+    }
     override func loadView()
     {
         serverGameManager.refreshGamesList()
@@ -80,6 +90,13 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
             
             var summaryAlert = UIAlertView(title: gD.name, message: msg, delegate: nil, cancelButtonTitle: "Close", otherButtonTitles: "OK")
             summaryAlert.show()
+            
+        }
+        
+        //otherwise the game is ready for me to join
+        else
+        {
+            gameJoinDel?.signalJoinGame("Player2", id:gameForCell.id)
             
         }
         

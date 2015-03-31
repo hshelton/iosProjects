@@ -31,7 +31,8 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
         _serverManager.refreshGamesList()
         underlyingView = SplashView()
         underlyingView?.delegate = self
-        _gameNameController._underlyingView.delegate = self
+        _gameNameController._underlyingView.delegate = self //this controller will listen to create game signals
+        _listController.gameJoinDel = self
         _transitionController.delegate = self
         _gamePlayController._player1ViewController.saveDelegate = self
         _gamePlayController._player2ViewController.saveDelegate = self
@@ -68,8 +69,15 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
     func signalCreateGame(gameName: String, playerName: String)
     {
         _serverManager.createGame(gameName, playerName: playerName)
+        var summaryAlert = UIAlertView(title: "Created", message: "Game \(gameName) has been created. Status is waiting. Return to lobby to play", delegate: nil, cancelButtonTitle: "Close", otherButtonTitles: "OK")
+        
     }
-    
+   
+    //called whenever we are to join an existing game
+   func signalJoinGame(playerName: String, id: String)
+   {
+        _serverManager.joinGame(playerName, gameID: id)
+   }
     
 
 
