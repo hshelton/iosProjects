@@ -7,54 +7,29 @@
 //
 
 import Foundation
-
-
-class gameSummary
-{
-    var name: String = ""
-    var player1: String = ""
-    var player2: String = ""
-    var winner: String = ""
-    var missilesLaunched: Int = 0
-    
-    init (_name: String, _player1: String, _player2: String, _winner:String, _missilesLaunched: Int)
-    {
-        name = _name
-        player1 = _player1
-        player2 = _player2
-        winner = _winner
-        missilesLaunched = _missilesLaunched
-    }
-}
-
 class ServerGameManager
 {
     //the server gives us an array of JSON objects which represent games
     private var serverGames: [Int: serverGame] = [:] //order created to server game
     var globalCounter = 0
-    var playerGUIDs: [String] = [] //these are my games
-    var gameGUIDs: [String] = [] //these are my player ids
+    var myGamesDictionary: NSMutableArray = [] //this is a dictionary of gameIDs to playerIDs
+   
     
     init()
     {
-        loadPlayerIDsFromFile()
-        loadGameIDsFromFile()
+     //TODO: load the gameid to player id dictionary from file
     }
     
     
-    struct serverGame
-    {
-        var id: String
-        var name: String
-        var status: String
-    }
+ 
     
     //checks to see if the game in question is one of your own
     func isMyGame(id: String) -> Bool
     {
-        for r in gameGUIDs
+        for var i = 0; i < myGamesDictionary.count; i++
         {
-            if(r == id)
+            let tempDict = myGamesDictionary[i] as NSDictionary
+            if(tempDict["gameId"] as String == id)
             {
                 return true
             }
@@ -74,8 +49,12 @@ class ServerGameManager
     
     func getGameForCellAtIndexForMyGames(index: Int) -> serverGame
     {
-        var sG = serverGame(id: "0", name: "", status: "")
-        let gameID: String = gameGUIDs[index]
+        var entry = myGamesDictionary[index] as NSDictionary
+        
+        //get the game id for the game
+        var gameID: String = entry["gameId"] as String
+       
+       var sG = serverGame(_id: "0", _name: "", _status: "")
         let getURL: String = "http://battleship.pixio.com/api/v2/lobby/"+gameID
         let gameDetailURL: NSURL = NSURL(string: getURL)!
         
@@ -94,11 +73,18 @@ class ServerGameManager
         sG.status = serializedGame!["status"] as String
         sG.id = gameID
         return sG
+
+    }
+    
+    func getServerParamsForGameAtIndex(index: Int) -> NSDictionary
+    {
+        var entry = myGamesDictionary[index] as NSDictionary
+        return entry
     }
     
     func getMyGameCount() -> Int
     {
-        return gameGUIDs.count
+        return myGamesDictionary.count
     }
     func addserverGameToList(sv: serverGame)
     {
@@ -108,10 +94,8 @@ class ServerGameManager
     
     func createGame(gameName: String, playerName: String)
     {
-        
         //this will hold the NSError if we can't create an NSDictionary from the server response
         var err: NSError?
-        
         let request = NSMutableURLRequest(URL: NSURL(string: "http://battleship.pixio.com/api/v2/lobby")!)
         request.HTTPMethod = "POST"
         let postString = "gameName=\(gameName)&playerName=\(playerName)"
@@ -134,15 +118,36 @@ class ServerGameManager
             var responsePlayerID = json!["playerId"] as String
             var responseGameID = json!["gameId"] as String
             
-           self.playerGUIDs.append(responsePlayerID)
-            self.gameGUIDs.append(responseGameID)
-            
+        //once I create a game, I should save my player id and the game id
+            let dictionaryEntry: NSDictionary = ["gameId": responseGameID, "playerId":responsePlayerID]
+            self.myGamesDictionary.addObject(dictionaryEntry)
+            self.writeGamesDictionaryToFile()
         }
-        
-        
         task.resume()
-        writeGameIDsToFile()
-        writePlayerIDsToFile()
+        loadGameIDsFromFile()
+    }
+    func joinGame(playerName: String, gameID: String)
+    {
+        var err: NSError?
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://battleship.pixio.com/api/v2/lobby/\(gameID)")!)
+        request.HTTPMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "content-type")
+        
+        let jsonObject: NSDictionary = ["playerName": playerName, "id": "gameID"]
+        let requestDict = NSJSONSerialization.dataWithJSONObject(jsonObject, options: .allZeros, error: nil)
+        request.HTTPBody = requestDict
+        
+        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
+        
+        let gameAttributions: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: nil)! as NSDictionary
+        println(gameAttributions)
+        
+        var idReturned = gameAttributions["playerId"] as String
+        //once I join a game, I should save the game id and the player id
+        let dictionaryEntry: NSDictionary = ["gameId": gameID, "playerId":idReturned]
+        myGamesDictionary.addObject(dictionaryEntry)
+        writeGamesDictionaryToFile()
+        loadGameIDsFromFile()
     }
     
     func refreshGamesList()
@@ -152,13 +157,12 @@ class ServerGameManager
     
     func refreshMyGamesList()
     {
-        loadPlayerIDsFromFile()
-        loadGameIDsFromFile()
+       loadGameIDsFromFile()
     }
     //this function pulls in the games list from the server
     func refreshGamesList(offset: Int)
     {
-        let gameListURL: NSURL = NSURL(string:"http://battleship.pixio.com/api/v2/lobby?offset=\(offset)&results=1000")!
+        let gameListURL: NSURL = NSURL(string:"http://battleship.pixio.com/api/v2/lobby?offset=\(offset)&results=5000")!
         let gameListJson: NSData? = NSData(contentsOfURL: gameListURL)
         if(gameListJson == nil)
         {
@@ -172,14 +176,22 @@ class ServerGameManager
         {
             return
         }
+        var skip: Int = 0
         for gameDictionary in serializedGames!
         {
+            if(skip >= 700)
+            {
             let gameID: String = gameDictionary["id"]as String
             let name: String  = gameDictionary["name"] as String
             let status: String = gameDictionary["status"] as String
             
-            var tempGame: serverGame = serverGame(id: gameID, name: name, status: status)
+            var tempGame: serverGame = serverGame(_id: gameID, _name: name, _status: status)
             serverGames[globalCounter++] = tempGame
+            }
+            else
+            {
+                skip++
+            }
         }
         
         
@@ -214,113 +226,193 @@ class ServerGameManager
         
     }
     
-    func joinGame(playerName: String, gameID: String)
+    func getBoardsForPlayersInGame(GameID: String, PlayerID: String) -> NSMutableDictionary
     {
-        var err: NSError?
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://battleship.pixio.com/api/v2/lobby/\(gameID)")!)
-        request.HTTPMethod = "PUT"
-        request.setValue("application/json", forHTTPHeaderField: "content-type")
-            
-        let jsonObject: NSDictionary = ["playerName": playerName, "id": "gameID"]
-        let requestDict = NSJSONSerialization.dataWithJSONObject(jsonObject, options: .allZeros, error: nil)
-        request.HTTPBody = requestDict
+        var gameBoardURL: NSURL = NSURL(string:"http://battleship.pixio.com/api/v2/games/\(GameID)/boards?playerId=\(PlayerID)")!
+        let gameBoardJson: NSData? = NSData(contentsOfURL: gameBoardURL)
         
-        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
-        
-        let gameAttributions: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: nil)! as NSDictionary
-        println(gameAttributions)
-        
-        var idReturned = gameAttributions["playerId"] as String
-        playerGUIDs.append(idReturned)
-        gameGUIDs.append(gameID)
-        
-        writeGameIDsToFile()
-        loadGameIDsFromFile()
-        writePlayerIDsToFile()
-        loadPlayerIDsFromFile()
-    }
-    
-    func writePlayerIDsToFile()
-    {
-        let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as String?
-        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battlePlayerInfo.txt")
-        var arr: NSMutableArray = []
-        
-        //add all the playerIDs to the master array
-        for entry in playerGUIDs
+        var boardDictionary: NSMutableDictionary = NSMutableDictionary()
+        if(gameBoardJson == nil)
         {
-            arr.addObject(entry)
+            return boardDictionary
+        }
+        let gameBoardJsonString: NSString? = NSString(data: gameBoardJson!, encoding: NSUTF8StringEncoding)
+        
+        
+        let gameDict: NSDictionary? = NSJSONSerialization.JSONObjectWithData(gameBoardJson!, options: .allZeros, error: nil) as NSDictionary?
+        
+        if(gameDict == nil)
+        {
+            return boardDictionary
+        }
+
+        let playerBoard = gameDict!["playerBoard"] as NSArray
+        let opponentBoard = gameDict!["opponentBoard"] as NSArray
+    
+        
+        var playerGrid: ShipGrid = ShipGrid()
+        var opponentGrid: ShipGrid = ShipGrid()
+        
+        /* 
+        status ENUM: HIT , MISS , NONE
+        HIT: a player has hit this cell
+        MISS: a player has missed this cell
+        SHIP: this cell is part of a ship and has not been hit
+        NONE: this cell has no activity
+        */
+        for entry in playerBoard
+        {
+            var what = entry as NSDictionary
+            var col: Int = entry["xPos"] as Int
+            var row: Int = entry["yPos"] as Int
+            if(entry["status"] as NSString == "NONE")
+            {
+                
+                playerGrid.SetContentsOfGridCellWithIntRow(row, col: col, contents: "e")
+            }
+            else
+            {
+            
+            if(entry["status"] as NSString == "SHIP")
+            {
+
+                playerGrid.SetContentsOfGridCellWithIntRow(row, col: col, contents: "s")
+            }
+            if(entry["status"] as NSString == "HIT")
+            {
+    
+                playerGrid.SetContentsOfGridCellWithIntRow(row, col: col, contents: "h")
+            }
+            if(entry["status"] as NSString == "MISS")
+            {
+        
+            playerGrid.SetContentsOfGridCellWithIntRow(row, col: col, contents: "m")
+            }
+            }
+        }
+        for entry in opponentBoard
+            {
+                var what = entry as NSDictionary
+                var col: Int = entry["xPos"] as Int
+                var row: Int = entry["yPos"] as Int
+                if(entry["status"] as NSString == "NONE")
+            {
+                    
+                    opponentGrid.SetContentsOfGridCellWithIntRow(row, col: col, contents: "e")
+            }
+                else
+            {
+                        
+                        if(entry["status"] as NSString == "SHIP")
+            {
+                    
+                    opponentGrid.SetContentsOfGridCellWithIntRow(row, col: col, contents: "s")
+                        }
+                        if(entry["status"] as NSString == "HIT")
+            {
+                        
+                        opponentGrid.SetContentsOfGridCellWithIntRow(row, col: col, contents: "h")
+                        }
+                        
+                        if(entry["status"] as NSString == "MISS")
+            {
+                            
+                            opponentGrid.SetContentsOfGridCellWithIntRow(row, col: col, contents: "m")
+                        }
+                }
         }
         
-        //write to disk
-        arr.writeToFile(filePath!, atomically: true)
-        
+       
+        boardDictionary["playerBoard"] = playerGrid
+        boardDictionary["opponentBoard"] = opponentGrid
+      
+        return boardDictionary
     }
+
     
-    func writeGameIDsToFile()
+    func writeGamesDictionaryToFile()
     {
-        
         let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as String?
-        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battleGameInfo.txt")
+        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battleShipGameInfo.txt")
         var arr: NSMutableArray = []
         
         //add all the game saves to the master array
-        for entry in gameGUIDs
+        for entry in myGamesDictionary
         {
             arr.addObject(entry)
         }
-
+        
         //write to disk
         arr.writeToFile(filePath!, atomically: true)
     }
+    
+
     
     
     func loadGameIDsFromFile()
     {
         let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as String?
-        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battleGameInfo.txt")
+        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battleShipGameInfo.txt")
         //load in the file to memory
         let fileText = String(contentsOfFile: filePath!, encoding: NSUTF8StringEncoding, error: nil)
-        gameGUIDs = []
-
+        myGamesDictionary = []
         var readArray: NSArray? = NSArray(contentsOfFile: filePath!)
         if let activeArray = readArray
         {
             
             for(var i=0; i < activeArray.count; i++)
             {
-                var readString: String = activeArray[i] as String
-               gameGUIDs.append(readString)
+                var readDict: NSDictionary = activeArray[i] as NSDictionary
+                
+                //add all the read in game saves to the master array
+               myGamesDictionary.addObject(readDict)
             }
+            
+           
         }
-
+        
     }
 
-    func loadPlayerIDsFromFile()
+   
+
+    
+    
+    
+    
+}
+
+class serverGame
+{
+    var id: String
+    var name: String
+    var status: String
+    
+    init(_id:String, _name:String, _status:String)
     {
-        let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as String?
-        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("battlePlayerInfo.txt")
-        //load in the file to memory
-        let fileText = String(contentsOfFile: filePath!, encoding: NSUTF8StringEncoding, error: nil)
-       playerGUIDs = []
-        
-        var readArray: NSArray? = NSArray(contentsOfFile: filePath!)
-        if let activeArray = readArray
-        {
-            
-            for(var i=0; i < activeArray.count; i++)
-            {
-                var readString: String = activeArray[i] as String
-                playerGUIDs.append(readString)
-            }
-        }
+        id = _id
+        name = _name
+        status = _status
         
     }
+}
 
+
+class gameSummary
+{
+    var name: String = ""
+    var player1: String = ""
+    var player2: String = ""
+    var winner: String = ""
+    var missilesLaunched: Int = 0
     
-    
-    
-    
+    init (_name: String, _player1: String, _player2: String, _winner:String, _missilesLaunched: Int)
+    {
+        name = _name
+        player1 = _player1
+        player2 = _player2
+        winner = _winner
+        missilesLaunched = _missilesLaunched
+    }
 }
 
     

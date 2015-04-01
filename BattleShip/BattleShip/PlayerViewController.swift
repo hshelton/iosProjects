@@ -20,7 +20,7 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
     var playerLabel: String = ""
     
     weak var delegate: GridViewRegistrant?
-    weak var saveDelegate: AppStateUpdateResponder?
+    weak var getGridsDelegate: AppStateUpdateResponder?
     
     override func viewDidLoad()
     {
@@ -28,21 +28,14 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
         _underlyingView._youGrid.DrawSquaresForShipsFromGrid(_yourGrid)
         _underlyingView._opponentGrid.DrawLaunchesFromGrid(_opponentGrid)
         
-        var saveButton: UIBarButtonItem = UIBarButtonItem(title: "Save", style:UIBarButtonItemStyle.Plain, target: self, action: "writeToFile")
-        
-
-        self.navigationItem.rightBarButtonItem = saveButton
-        self.navigationItem.leftBarButtonItem?.title = "Quit"
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
+     
     }
 
     override func loadView()
     {
 
         view = _underlyingView
-        _underlyingView.delegate = self
-        _underlyingView._opponentGrid.gridDelegate = self
-        _underlyingView.setPlayerLabelText(playerLabel)
+        getGridsDelegate?.AppStateChanged("requestGrids")
   
 
         self.title = "Battle!"
@@ -51,13 +44,14 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
     //update game state according to the missile strike
     func getRowAndColumn (row: Character, column: Int)
     {
-        delegate?.getRowAndColumn(row, column: column)
+        
     }
     
     func supplyShipGrid()
     {
        _underlyingView._youGrid.DrawSquaresForShipsFromGrid(_yourGrid)
        _underlyingView._opponentGrid.DrawLaunchesFromGrid(_opponentGrid)
+        _underlyingView.setNeedsDisplay()
         
     }
     
@@ -78,14 +72,6 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
         
     }
     
-    func writeToFile()
-    {
-        var alertView = UIAlertView();
-        alertView.addButtonWithTitle("Ok");
-        alertView.title = "Save";
-        alertView.message = "Game Saved";
-        alertView.show();
-        saveDelegate?.AppStateChanged("saveNow")
-    }
+
 
 }

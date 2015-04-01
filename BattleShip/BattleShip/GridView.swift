@@ -278,10 +278,7 @@ class GridView: UIView
         }
       
     }
-    
-  
-    
-    
+
     func DrawSquaresForShipsFromGrid(grid: [String])
     {
          redrawSelected = false

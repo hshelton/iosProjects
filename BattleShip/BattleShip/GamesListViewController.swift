@@ -16,7 +16,7 @@ protocol gameLoader:class
 
 protocol gameInitializeResponder: class
 {
-    func initGame(gameGUID: String)
+    func initGame(gameGUID: String, playerGUID: String)
     
 }
 class GamesListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
@@ -79,8 +79,8 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        serverGameManager.loadGameIDsFromFile()
-        serverGameManager.loadPlayerIDsFromFile()
+       // serverGameManager.loadGameIDsFromFile()
+      //  serverGameManager.loadPlayerIDsFromFile()
         var gameForCell = serverGameManager.getGameForCellAtIndex(indexPath.item)
         if(gameForCell.status != "WAITING")
         {
@@ -88,7 +88,8 @@ class GamesListViewController: UIViewController, UITableViewDataSource, UITableV
             
             if(serverGameManager.isMyGame(gameForCell.id))
             {
-                gameStartDel?.initGame(gameForCell.id)
+                var summaryAlert2 = UIAlertView(title: gD.name, message: "To play go back to my games and click on this game", delegate: nil, cancelButtonTitle: "Close", otherButtonTitles: "OK")
+                summaryAlert2.show()
             }
             else
             {

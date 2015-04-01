@@ -21,6 +21,13 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
     var _myGamesController: MyGamesListViewController = MyGamesListViewController()
     
     
+    //this is the new game controller
+    var _playerController: PlayerViewController = PlayerViewController()
+
+    
+    var playerShipGrid: ShipGrid = ShipGrid()
+    var opponentShipGrid: ShipGrid = ShipGrid()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,8 +44,7 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
         _listController!.gameJoinDel = self
         _listController!.gameStartDel = self
         _transitionController.delegate = self
-        _gamePlayController._player1ViewController.saveDelegate = self
-        _gamePlayController._player2ViewController.saveDelegate = self
+
         _listController!.appDel = self
         _myGamesController.gameStartDel = self
         view = underlyingView
@@ -47,6 +53,7 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
         self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
         title = "Start"
         
+        _playerController.getGridsDelegate = self
        // _serverManager.createGame("Digimon", playerName: "Philipe")
     }
     
@@ -62,8 +69,13 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
             self.navigationController?.pushViewController(_listController!, animated: true)
         
         case "myGames":
+            _myGamesController.serverGameManager.loadGameIDsFromFile()
             self.navigationController?.pushViewController(_myGamesController, animated: true)
         
+        case "requestGrids":
+            _playerController._yourGrid = playerShipGrid._grid
+            _playerController._opponentGrid = opponentShipGrid._grid
+            _playerController.supplyShipGrid()
             
         default:
             return
@@ -81,14 +93,31 @@ class ApplicationViewController: UIViewController, AppStateUpdateResponder, Game
     //called whenever we are to join an existing game
    func signalJoinGame(playerName: String, id: String)
    {
-        _serverManager.joinGame(playerName, gameID: id)
+        _myGamesController.serverGameManager.joinGame(playerName, gameID: id)
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.pushViewController(_myGamesController, animated: true)
    }
 
-    func initGame(gameGUID: String)
+    func initGame(gameGUID: String, playerGUID: String)
     {
+        var res: NSMutableDictionary = _myGamesController.serverGameManager.getBoardsForPlayersInGame(gameGUID, PlayerID: playerGUID)
         
+        var playerGrid: ShipGrid = res["playerBoard"] as ShipGrid
+        var opponentGrid: ShipGrid = res["opponentBoard"] as ShipGrid
+        playerShipGrid = playerGrid
+        opponentShipGrid = opponentGrid
+        
+        self.navigationController?.popToRootViewControllerAnimated(false)
+        self.navigationController?.pushViewController(_playerController, animated: true)
+     
     }
 
+}
 
+protocol serverManagerInterface: class
+{
+    
+    
+    
 }
 

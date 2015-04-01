@@ -26,11 +26,11 @@ class MyGamesListViewController: UIViewController, UITableViewDataSource, UITabl
     {
         super.viewDidLoad()
         title = "My Games"
+        serverGameManager.refreshGamesList()
         tableView.dataSource = self
         tableView.delegate = self
-  
 
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         
         
     }
@@ -69,8 +69,13 @@ class MyGamesListViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var sG = serverGameManager.getGameForCellAtIndexForMyGames(indexPath.item)
-        gameStartDel?.initGame(sG.id)
+      
+        var entry: NSDictionary = serverGameManager.getServerParamsForGameAtIndex(indexPath.item)
+        var gameID: String = entry["gameId"] as String
+        var playerID: String = entry["playerId"] as String
+        
+        gameStartDel?.initGame(gameID, playerGUID: playerID)
+    
         
     }
     

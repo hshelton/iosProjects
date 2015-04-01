@@ -42,7 +42,7 @@ class GameNamerView: UIView
         let Button = UIButton()
             
         Button.setTitle("Ready", forState: .Normal)
-        Button.frame = CGRectMake(100, UIScreen.mainScreen().bounds.midY + 40, UIScreen.mainScreen().bounds.width - 110, 50)
+        Button.frame = CGRectMake(100, UIScreen.mainScreen().bounds.midY - 200, UIScreen.mainScreen().bounds.width - 110, 50)
         Button.backgroundColor = UIColor(red: 0, green:0.85, blue:0.3, alpha: 1.0)
         Button.addTarget(self, action: "pressed", forControlEvents: .TouchUpInside)
         
