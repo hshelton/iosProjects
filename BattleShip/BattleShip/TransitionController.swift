@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransitionController: UIViewController, AppStateUpdateResponder
+class TransitionController: UIViewController
 {
     
     
@@ -20,8 +20,8 @@ class TransitionController: UIViewController, AppStateUpdateResponder
         // Do any additional setup after loading the view, typically from a nib.
         underlyingView.backgroundColor = UIColor(red: 0, green: 0.5, blue: 0.85, alpha: 1.0)
         
-        title = "Pass Device"
-        
+        title = "Waiting"
+        delegate?.AppStateChanged("stall")
         
     }
     
@@ -29,21 +29,10 @@ class TransitionController: UIViewController, AppStateUpdateResponder
     {
         
         view = underlyingView
-        underlyingView.delegate = self
-        
+
         
     }
     
-    func AppStateChanged(reason: String) {
-        switch(reason)
-        {
-        case "ready":
-            delegate?.AppStateChanged("ready")
 
-        default:
-            return
-            
-        }
-    }
     
 }

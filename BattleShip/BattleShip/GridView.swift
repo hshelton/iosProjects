@@ -159,44 +159,7 @@ class GridView: UIView
         
         CGContextMoveToPoint(context, 0.0, yPos + interval2)
     }
-    // draw the current selected
     
-    if(redrawSelected && !never_redraw)
-    {
-        CGContextAddRect(context, rectToDraw)
-        let invalidColor: UIColor = UIColor(red: 1.0, green: 0.0, blue: 1.0, alpha: 0.2)
-        CGContextSetFillColorWithColor(context, invalidColor.CGColor)
-        CGContextDrawPath(context, kCGPathFill)
-        redrawSelected = false
-    
-    }
-    // draw all the saved rectangles
-
-    CGContextSetFillColorWithColor(context, UIColor(red: 0, green: 0.5, blue: 0, alpha: 1).CGColor)
-    CGContextSetLineCap(context, CGLineCap(2))
-    
-    //first rectangle is being drawn twice, eliminate duplicate shadow
-    var tempBugFix: Int = 0
-        for r in rectsToDraw
-        {
-                CGContextAddRect(context, r)
-                CGContextDrawPath(context, kCGPathFill)
-        }
-    
-    CGContextSetFillColorWithColor(context,  UIColor.whiteColor().CGColor)
-    for r in missedSquares
-    {
-        CGContextAddRect(context, r)
-        CGContextDrawPath(context, kCGPathFill)
-    }
-    
-    CGContextSetFillColorWithColor(context,  UIColor.redColor().CGColor)
-    for r in hitSquares
-    {
-        CGContextAddRect(context, r)
-        CGContextDrawPath(context, kCGPathFill)
-    }
-         gridDelegate?.supplyShipGrid()  
     }
     
     //tells those interested the new row and column
@@ -256,99 +219,8 @@ class GridView: UIView
     
     }
     
-    //this function draws multiple squares onto the grid from a model
-    func DrawLaunchesFromGrid(grid: [String])
-    {
-        redrawSelected = false
-        for var i = 0; i < grid.count; i++
-        {
-            if(grid[i] == "m")
-            {
-                let row:Int = i/10
-                let col:Int = i%10
-                
-                ColorSquare(col, YOffset: row, hit: false)
-            }
-            else if(grid[i] == "h")
-            {
-                let row:Int = i/10
-                let col:Int = i%10
-                 ColorSquare(col, YOffset: row, hit: true)
-            }
-        }
-      
-    }
 
-    func DrawSquaresForShipsFromGrid(grid: [String])
-    {
-         redrawSelected = false
-        for var i = 0; i < grid.count; i++
-        {
-            if(grid[i] == "s")
-            {
-                let row:Int = i/10
-                let col:Int = i%10
-                
-                AddShip(col, YOffset: row)
-            }
-            if(grid[i]=="m")
-            {
-                let row:Int = i/10
-                let col:Int = i%10
-                ColorSquare(col, YOffset:row, hit: false)
-            }
-            if(grid[i]=="h")
-            {
-                let row:Int = i/10
-                let col:Int = i%10
-                ColorSquare(col, YOffset:row, hit: true)
-            }
-            
-          
-        }
-    }
-    
-    func AddShip(XOffset: Int, YOffset: Int)
-    {
-        let YInterval: CGFloat = bounds.height / 10
-        let XInterval:CGFloat = bounds.width / 10
-        
-        var rX:CGFloat = CGFloat(XInterval * CGFloat(XOffset))
-        var rY:CGFloat = CGFloat(YInterval * CGFloat(YOffset))
-        
-        let rec: CGRect = CGRect(x: rX, y: rY, width: XInterval, height: YInterval)
-        
-         rectsToDraw.append(rec)
-        
-        setNeedsDisplay()
-    }
-    
-    
-    
-    //save a colored square on the grid
-    func ColorSquare(XOffset: Int, YOffset: Int, hit: Bool)
-    {
- 
-        let YInterval: CGFloat = bounds.height / 10
-        let XInterval:CGFloat = bounds.width / 10
-        
-        var rX:CGFloat = CGFloat(XInterval * CGFloat(XOffset))
-        var rY:CGFloat = CGFloat(YInterval * CGFloat(YOffset))
-        
-        let rec: CGRect = CGRect(x: rX, y: rY, width: XInterval, height: YInterval)
-        
-        if(hit)
-        {
-            hitSquares.append(rec)
-        }
-        else
-        {
-            missedSquares.append(rec)
-        }
    
-        setNeedsDisplay()
-    }
-    
     
 
 }

@@ -32,7 +32,7 @@ class GamePlayController: UIViewController, GridViewRegistrant, AppStateUpdateRe
         _player2ViewController._yourGrid = _gameModel.Player2Grid._grid
         _player1ViewController.delegate = self
         _player2ViewController.delegate = self
-        _transitionViewController.delegate = self
+   
         _gameModel.P1Turn = true
         
         _player1ViewController.playerLabel = "P1"

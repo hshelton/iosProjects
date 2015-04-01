@@ -49,11 +49,11 @@ class GamePlayView: UIView, GridViewRegistrant
         
         _yourHP = UILabel(); _yourHP.font = UIFont(name: "battle", size: 8.0)
         _yourHP.text = "You: 100%"; _yourHP.textAlignment = NSTextAlignment.Center
-        _yourHP.textColor = greenText
+        _yourHP.textColor = UIColor.blackColor()
         
         _enemyHP = UILabel(); _enemyHP.font = UIFont(name: "battle", size: 8.0)
         _enemyHP.text = "Enemy: 100%";  _enemyHP.textAlignment = NSTextAlignment.Center
-        _enemyHP.textColor = greenText
+        _enemyHP.textColor = UIColor.blackColor()
         
         addSubview(_enemyLabel)
         addSubview(_opponentGrid)
@@ -72,6 +72,8 @@ class GamePlayView: UIView, GridViewRegistrant
     {
         super.init()
     }
+    
+ 
     
     func setPlayerLabelText(labText: String)
     {

@@ -16,7 +16,7 @@
 		BC217C011AA1570900724C8C /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C001AA1570900724C8C /* GameGrid.swift */; };
 		BC217C031AA162BF00724C8C /* ShipGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C021AA162BF00724C8C /* ShipGrid.swift */; };
 		BC217C051AA1636200724C8C /* Fleet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC217C041AA1636200724C8C /* Fleet.swift */; };
-		BC31A2851ABF2232004B0086 /* GamePlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31A2841ABF2232004B0086 /* GamePlayController.swift */; };
+		BC31A2851ABF2232004B0086 /* oldGamePlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31A2841ABF2232004B0086 /* oldGamePlayController.swift */; };
 		BC4779601ABF55A300FF4F4F /* explode.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC47795F1ABF55A300FF4F4F /* explode.mp3 */; };
 		BC4779621ABF57E800FF4F4F /* miss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC4779611ABF57E800FF4F4F /* miss.mp3 */; };
 		BC4C3C011AA571D300BCD8C8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */; };
@@ -61,7 +61,7 @@
 		BC217C001AA1570900724C8C /* GameGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
 		BC217C021AA162BF00724C8C /* ShipGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipGrid.swift; sourceTree = "<group>"; };
 		BC217C041AA1636200724C8C /* Fleet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fleet.swift; sourceTree = "<group>"; };
-		BC31A2841ABF2232004B0086 /* GamePlayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlayController.swift; sourceTree = "<group>"; };
+		BC31A2841ABF2232004B0086 /* oldGamePlayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = oldGamePlayController.swift; sourceTree = "<group>"; };
 		BC47795F1ABF55A300FF4F4F /* explode.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explode.mp3; sourceTree = "<group>"; };
 		BC4779611ABF57E800FF4F4F /* miss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = miss.mp3; sourceTree = "<group>"; };
 		BC4C3C001AA571D300BCD8C8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 				BCCBCF171AA9536100782C5D /* GamesListViewController.swift */,
 				BCA91DD51AB4C96800BC2AD2 /* PlayerViewController.swift */,
 				BCD439921ABE13110069344D /* TransitionController.swift */,
-				BC31A2841ABF2232004B0086 /* GamePlayController.swift */,
+				BC31A2841ABF2232004B0086 /* oldGamePlayController.swift */,
 				BC9252B51AC8D1920008FDB3 /* GameNameController.swift */,
 				BCCF2CC01ACB55DE00409D86 /* MyGamesListViewController.swift */,
 			);
@@ -319,7 +319,7 @@
 				BC9252B61AC8D1920008FDB3 /* GameNameController.swift in Sources */,
 				BCD236E01AC8BF0D00DFCB80 /* ServerGameManager.swift in Sources */,
 				BCCBCF181AA9536100782C5D /* GamesListViewController.swift in Sources */,
-				BC31A2851ABF2232004B0086 /* GamePlayController.swift in Sources */,
+				BC31A2851ABF2232004B0086 /* oldGamePlayController.swift in Sources */,
 				BC217BFC1AA1567E00724C8C /* GameModel.swift in Sources */,
 				BC217C031AA162BF00724C8C /* ShipGrid.swift in Sources */,
 				BCA91DD81AB4D65800BC2AD2 /* GamePlayView.swift in Sources */,

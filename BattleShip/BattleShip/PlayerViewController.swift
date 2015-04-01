@@ -9,7 +9,7 @@
 import UIKit
 
 //View controller used to control game play for player 1 and player 2
-class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvider
+class PlayerViewController: UIViewController,  GridViewRegistrant
 {
 
   
@@ -25,9 +25,7 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        _underlyingView._youGrid.DrawSquaresForShipsFromGrid(_yourGrid)
-        _underlyingView._opponentGrid.DrawLaunchesFromGrid(_opponentGrid)
-        
+        _underlyingView.delegate = self
      
     }
 
@@ -35,27 +33,17 @@ class PlayerViewController: UIViewController,  GridViewRegistrant, ShipGridProvi
     {
 
         view = _underlyingView
-        getGridsDelegate?.AppStateChanged("requestGrids")
-  
-
         self.title = "Battle!"
     }
     
     //update game state according to the missile strike
     func getRowAndColumn (row: Character, column: Int)
     {
-        
+        //tell the application view controller to attempt a guess
+        delegate?.getRowAndColumn(row, column: column)
     }
     
-    func supplyShipGrid()
-    {
-       _underlyingView._youGrid.DrawSquaresForShipsFromGrid(_yourGrid)
-       _underlyingView._opponentGrid.DrawLaunchesFromGrid(_opponentGrid)
-        _underlyingView.setNeedsDisplay()
-        
-    }
-    
- 
+
   
     func getIntValue(c: Character) ->Int
     {

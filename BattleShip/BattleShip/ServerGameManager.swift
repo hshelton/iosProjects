@@ -162,7 +162,7 @@ class ServerGameManager
     //this function pulls in the games list from the server
     func refreshGamesList(offset: Int)
     {
-        let gameListURL: NSURL = NSURL(string:"http://battleship.pixio.com/api/v2/lobby?offset=\(offset)&results=5000")!
+        let gameListURL: NSURL = NSURL(string:"http://battleship.pixio.com/api/v2/lobby?offset=\(offset)&results=500000")!
         let gameListJson: NSData? = NSData(contentsOfURL: gameListURL)
         if(gameListJson == nil)
         {
@@ -176,10 +176,15 @@ class ServerGameManager
         {
             return
         }
-        var skip: Int = 0
+        //list only the newest games
+        var skip = Double(serializedGames!.count) * 0.9
+        var current = 0
+        
+        var skipInt = Int(skip)
+        
         for gameDictionary in serializedGames!
         {
-            if(skip >= 700)
+            if(current > skipInt)
             {
             let gameID: String = gameDictionary["id"]as String
             let name: String  = gameDictionary["name"] as String
@@ -190,7 +195,7 @@ class ServerGameManager
             }
             else
             {
-                skip++
+                current++
             }
         }
         
@@ -225,6 +230,64 @@ class ServerGameManager
         return gS
         
     }
+    
+    func makeAGuess(GameGUID: String, PlayerGUID: String, col: Int, row: Int) ->  turnResponse
+    {
+        var err: NSError?
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://battleship.pixio.com/api/v2/games/\(GameGUID)")!)
+        request.HTTPMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "content-type")
+        
+        let jsonObject: NSDictionary = ["playerId": PlayerGUID, "xPos": col, "yPos": row]
+        let requestDict = NSJSONSerialization.dataWithJSONObject(jsonObject, options: .allZeros, error: nil)
+        request.HTTPBody = requestDict
+        
+        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
+        
+        let responseAttributions: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: nil)! as NSDictionary
+        println(responseAttributions)
+        
+        if(responseAttributions["message"]? != nil)
+        {
+            return turnResponse(hit: false, valid: false)
+            
+        }
+        
+        if(responseAttributions["hit"] as Bool == true)
+        {
+            return turnResponse(hit: true, valid: true)
+        }
+        
+        return turnResponse(hit: true, valid: false)
+    }
+    
+    
+    func getIsMyTurn(GameGUID: String, PlayerGUID: String) -> Bool
+    {
+   
+        let getURL: String = "http://battleship.pixio.com/api/v2/games/"+GameGUID
+        let gameDetailURL: NSURL = NSURL(string: getURL)!
+        
+        let summaryData: NSData? = NSData(contentsOfURL: gameDetailURL)
+        if(summaryData == nil)
+        {
+            return false
+        }
+        let serializedGame: NSDictionary? = NSJSONSerialization.JSONObjectWithData(summaryData!, options: .allZeros, error: nil) as NSDictionary?
+        
+        if(serializedGame == nil)
+        {
+            return false
+        }
+   
+        var yourTurn: Bool = serializedGame!["isYourTurn"] as Bool
+        return yourTurn
+        
+    }
+    
+    
+    
+    
     
     func getBoardsForPlayersInGame(GameID: String, PlayerID: String) -> NSMutableDictionary
     {
