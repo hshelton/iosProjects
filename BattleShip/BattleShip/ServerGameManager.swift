@@ -192,7 +192,7 @@ class ServerGameManager
             
             var tempGame: serverGame = serverGame(_id: gameID, _name: name, _status: status)
             serverGames[globalCounter++] = tempGame
-            }
+            }``
             else
             {
                 current++
